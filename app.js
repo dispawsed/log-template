@@ -1,105 +1,62 @@
 // База данных твоих игр
 const gamesData = [
-    {
-        id: 1,
-        title: "Cyberpunk 2077",
-        appId: 1091500,
-        status: "recommended",
-        comment: "Потрясающий сюжет и атмосфера. Найт-Сити затягивает с головой, особенно после патчей."
-    },
-    {
-        id: 2,
-        title: "Hades II",
-        appId: 1145350,
-        status: "want-to-play",
-        comment: "Жду полного релиза, оригинал был абсолютным шедевром."
-    },
-    {
-        id: 3,
-        title: "Elden Ring",
-        appId: 1245620,
-        status: "played",
-        comment: "Прошел полностью. Мир огромный и красивый, но гринд местами утомляет."
-    },
-    {
-        id: 4,
-        title: "The Witcher 3: Wild Hunt",
-        appId: 292030,
-        status: "recommended",
-        comment: "Классика, которую перепрохожу раз в пару лет. Лучшие квесты в индустрии."
-    }
+    { id: 1, title: "Cyberpunk 2077", appId: 1091500, status: "recommended" },
+    { id: 2, title: "The Witcher 3: Wild Hunt", appId: 292030, status: "recommended" },
+    { id: 3, title: "Elden Ring", appId: 1245620, status: "played" },
+    { id: 4, title: "Grand Theft Auto V", appId: 271590, status: "played" },
+    { id: 5, title: "Hades II", appId: 1145350, status: "want-to-play" },
+    { id: 6, title: "Red Dead Redemption 2", appId: 1174180, status: "want-to-play" }
 ];
 
-// Словарик для человекочитаемых статусов
-const statusLabels = {
-    "recommended": "🔥 Рекомендую",
-    "played": "🎮 Играл",
-    "want-to-play": "⏳ Хочу сыграть",
-    "not-recommended": "👎 Не рекомендую"
-};
-
-const gamesGrid = document.getElementById('games-grid');
-const filterContainer = document.getElementById('filter-container');
-
-// Функция создания карточки игры
+// Функция сборки DOM-элемента карточки
 function createGameCard(game) {
-    // Собираем ссылки на основе Steam AppID
+    // Официальный CDN Steam для вертикальных обложек (размер 600x900)
     const coverUrl = `https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${game.appId}/library_600x900.jpg`;
     const steamUrl = `https://store.steampowered.com/app/${game.appId}`;
 
-    const card = document.createElement('div');
-    card.className = 'game-card';
+    // Создаем ссылку-контейнер
+    const cardLink = document.createElement('a');
+    cardLink.href = steamUrl;
+    cardLink.target = "_blank";
+    cardLink.rel = "noopener noreferrer";
+    cardLink.className = 'game-card';
     
-    card.innerHTML = `
+    cardLink.innerHTML = `
         <div class="game-cover-wrap">
             <img class="game-cover" src="${coverUrl}" alt="${game.title}" loading="lazy">
         </div>
         <div class="game-info">
-            <span class="game-status status-${game.status}">${statusLabels[game.status]}</span>
-            <h3 class="game-title">${game.title}</h3>
-            <p class="game-comment">${game.comment || 'Без комментария.'}</p>
-            <a href="${steamUrl}" target="_blank" rel="noopener noreferrer" class="steam-link">
-                <span>Страница в Steam</span>
-            </a>
+            <h3 class="game-title" title="${game.title}">${game.title}</h3>
         </div>
     `;
-    return card;
+    
+    return cardLink;
 }
 
-// Функция рендеринга списка игр с фильтрацией
-function renderGames(filter = 'all') {
-    gamesGrid.innerHTML = ''; // Очищаем сетку
+// Распределяем игры по соответствующим Grid-сеткам
+function initGallery() {
+    const statuses = ['recommended', 'played', 'want-to-play', 'not-recommended'];
     
-    const filteredGames = filter === 'all' 
-        ? gamesData 
-        : gamesData.filter(game => game.status === filter);
-
-    if (filteredGames.length === 0) {
-        gamesGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">Тут пока ничего нет...</p>`;
-        return;
-    }
-
-    filteredGames.forEach(game => {
-        const card = createGameCard(game);
-        gamesGrid.appendChild(card);
+    statuses.forEach(status => {
+        const gridContainer = document.getElementById(`grid-${status}`);
+        const sectionElement = document.getElementById(`section-${status}`);
+        
+        // Фильтруем игры по текущему статусу
+        const currentGames = gamesData.filter(game => game.status === status);
+        
+        // Если в этой категории игр нет — полностью скрываем секцию с экрана
+        if (currentGames.length === 0) {
+            if (sectionElement) sectionElement.style.display = 'none';
+            return;
+        }
+        
+        // Рендерим карточки в сетку
+        currentGames.forEach(game => {
+            const card = createGameCard(game);
+            gridContainer.appendChild(card);
+        });
     });
 }
 
-// Слушатель кликов по кнопкам фильтрации
-filterContainer.addEventListener('click', (e) => {
-    const button = e.target.closest('.btn');
-    if (!button) return;
-
-    // Переключаем активный класс на кнопках
-    filterContainer.querySelectorAll('.btn').forEach(btn => btn.classList.remove('active'));
-    button.classList.add('active');
-
-    // Фильтруем
-    const filterValue = button.getAttribute('data-filter');
-    renderGames(filterValue);
-});
-
-// Первый запуск — отображаем все игры
-document.addEventListener('DOMContentLoaded', () => {
-    renderGames('all');
-});
+// Запуск логики после полной загрузки страницы
+window.addEventListener('DOMContentLoaded', initGallery);

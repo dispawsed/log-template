@@ -3,28 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мой Игровой Трекер</title>
+    <title>Моя Игровая Полка</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header class="header">
-        <h1>Моя Игровая Полка</h1>
-        <p>Список игр, во что играл и что планирую пройти</p>
-        
-        <div class="filter-buttons" id="filter-container">
-            <button class="btn active" data-filter="all">Все</button>
-            <button class="btn" data-filter="recommended">🔥 Рекомендую</button>
-            <button class="btn" data-filter="played">🎮 Играл</button>
-            <button class="btn" data-filter="want-to-play">⏳ Хочу сыграть</button>
-            <button class="btn" data-filter="not-recommended">👎 Не рекомендую</button>
-        </div>
+        <h1>Игровая Полка</h1>
     </header>
 
     <main class="container">
-        <div class="games-grid" id="games-grid"></div>
+        <section class="status-section" id="section-recommended">
+            <h2 class="section-title">🔥 Рекомендую</h2>
+            <div class="games-grid" id="grid-recommended"></div>
+        </section>
+
+        <section class="status-section" id="section-played">
+            <h2 class="section-title">🎮 Играл</h2>
+            <div class="games-grid" id="grid-played"></div>
+        </section>
+
+        <section class="status-section" id="section-want-to-play">
+            <h2 class="section-title">⏳ Хочу сыграть</h2>
+            <div class="games-grid" id="grid-want-to-play"></div>
+        </section>
+
+        <section class="status-section" id="section-not-recommended">
+            <h2 class="section-title">👎 Не рекомендую</h2>
+            <div class="games-grid" id="grid-not-recommended"></div>
+        </section>
     </main>
 
-    <script type="module" src="app.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
