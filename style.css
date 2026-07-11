@@ -10,14 +10,14 @@
 }
 
 .light-theme {
-    --bg-color: #f8fafc;
-    --card-bg: #ffffff;
-    --text-main: #0f172a;
-    --text-muted: #64748b;
-    --glow-color: rgba(99, 102, 241, 0.08);
-    --border-color: rgba(0, 0, 0, 0.05);
-    --border-hover: rgba(0, 0, 0, 0.1);
-    --nav-bg: #ffffff; /* Цвет кнопок равен цвету карточек */
+    --bg-color: #f1f5f9;      /* Чуть серый фон для контраста с белыми карточками */
+    --card-bg: #ffffff;       /* Чистый белый для карточек */
+    --text-main: #1e293b;     /* Почти черный для лучшей читаемости */
+    --text-muted: #475569;
+    --border-color: #e2e8f0;  /* Более видимая граница */
+    --border-hover: #cbd5e1;
+    --nav-bg: #ffffff;
+    --glow-color: rgba(99, 102, 241, 0.15); /* Чуть заметнее свечение */
 }
 
 * {
@@ -51,7 +51,7 @@ body {
 
 .control-btn {
     background-color: var(--card-bg);
-    border: 1px solid var(--border-hover);
+    border: 1px solid var(--border-color);
     color: var(--text-main);
     width: 45px;
     height: 45px;
@@ -63,7 +63,7 @@ body {
     align-items: center;
     justify-content: center;
     line-height: 1;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 
@@ -160,12 +160,13 @@ body {
     flex-direction: column;
     transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
     border: 1px solid var(--border-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .game-card:hover {
     transform: translateY(-6px) scale(1.02);
     border-color: var(--border-hover);
-    box-shadow: 0 20px 30px var(--glow-color);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .game-cover-wrap {
@@ -216,6 +217,17 @@ body {
     transition: border-color 0.3s ease;
 }
 
+.nav-links a, #game-search {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+#game-search:focus {
+    border-color: #6366f1; /* Индиго для фокуса */
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
 .nav-wrapper {
     display: flex;
     justify-content: space-between;
@@ -248,5 +260,6 @@ body {
     text-transform: uppercase;
     z-index: 5; /* Ниже, чем ховер-эффекты, если нужно */
     pointer-events: none; /* Чтобы бейджик не мешал клику на карточку */
-    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    border: 1px solid rgba(255,255,255,0.2);
 }
