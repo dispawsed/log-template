@@ -59,6 +59,8 @@ const translations = {
     }
 };
 
+const categories = ['recommended', 'playing', 'want-to-play', 'not-recommended'];
+
 let currentLang = 'ru';
 
 function createGameCard(game) {
@@ -105,9 +107,8 @@ function applyTranslations() {
 }
 
 function initGallery() {
-    const statuses = ['recommended', 'playing', 'want-to-play', 'not-recommended'];
-    
-    statuses.forEach(status => {
+    // Используем константу
+    categories.forEach(status => {
         const gridContainer = document.getElementById(`grid-${status}`);
         const sectionElement = document.getElementById(`section-${status}`);
         const navLink = document.getElementById(`nav-${status}`);
@@ -120,15 +121,16 @@ function initGallery() {
             return;
         }
         
-        // Алфавитный порядок
         currentGames.sort((a, b) => a.title.localeCompare(b.title));
         
-        gridContainer.innerHTML = ''; // Очистка перед рендером
+        gridContainer.innerHTML = ''; 
         currentGames.forEach(game => {
             const card = createGameCard(game);
             gridContainer.appendChild(card);
         });
     });
+
+    updateNavVisibility(); 
 }
 
 function initControls() {
@@ -153,26 +155,42 @@ function initControls() {
     });
 }
 
+function updateNavVisibility() {
+    // Используем константу вместо создания массива каждый раз
+    categories.forEach(status => {
+        const section = document.getElementById(`section-${status}`);
+        const navLink = document.getElementById(`nav-${status}`);
+        
+        const visibleCards = Array.from(section.querySelectorAll('.game-card'))
+            .filter(card => card.style.display !== 'none');
+            
+        if (navLink) {
+            navLink.style.display = visibleCards.length > 0 ? 'inline-block' : 'none';
+        }
+    });
+}
+
 function initSearch() {
     const searchInput = document.getElementById('game-search');
     
     searchInput.addEventListener('input', (e) => {
         const term = e.target.value.toLowerCase();
         const allCards = document.querySelectorAll('.game-card');
-        const sections = document.querySelectorAll('.status-section');
-
-        // Скрываем/показываем карточки
+        
         allCards.forEach(card => {
             const title = card.querySelector('.game-title').textContent.toLowerCase();
             card.style.display = title.includes(term) ? 'flex' : 'none';
         });
 
         // Скрываем пустые секции
-        sections.forEach(section => {
-            const visibleCards = section.querySelectorAll('.game-card[style="display: flex;"], .game-card:not([style])');
-            const hasVisible = Array.from(visibleCards).some(c => c.style.display !== 'none');
-            section.style.display = hasVisible ? 'flex' : 'none';
+        categories.forEach(status => {
+            const section = document.getElementById(`section-${status}`);
+            const visibleCards = Array.from(section.querySelectorAll('.game-card'))
+                .filter(c => c.style.display !== 'none');
+            section.style.display = visibleCards.length > 0 ? 'flex' : 'none';
         });
+
+        updateNavVisibility();
     });
 }
 
