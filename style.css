@@ -1,5 +1,4 @@
-/* Палитры для тем */
-.dark-theme {
+:root {
     --bg-color: #0b0c10;
     --card-bg: #14161d;
     --text-main: #f3f4f6;
@@ -28,7 +27,7 @@
 }
 
 html {
-    scroll-behavior: smooth; /* Плавный спуск по клику на категорию */
+    scroll-behavior: smooth;
 }
 
 body {
@@ -37,10 +36,10 @@ body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     padding-bottom: 5rem;
     min-height: 100vh;
-    transition: background-color 0.3s ease, color 0.3s ease; /* Плавная смена темы */
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Кнопка смены темы в углу */
+/* Кнопка смены темы с исправленным выравниванием */
 .theme-btn {
     position: fixed;
     top: 1.5rem;
@@ -51,12 +50,16 @@ body {
     color: var(--text-main);
     width: 45px;
     height: 45px;
-    border-radius: 50%; /* Круглая */
+    border-radius: 50%;
     cursor: pointer;
     font-size: 1.2rem;
+    
+    /* Идеальное центрирование содержимого */
     display: flex;
     align-items: center;
     justify-content: center;
+    line-height: 1; 
+    
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     transition: transform 0.2s ease, background-color 0.3s ease;
 }
@@ -93,7 +96,7 @@ body {
     text-decoration: none;
     background-color: var(--nav-bg);
     padding: 0.6rem 1.2rem;
-    border-radius: 50px; /* Круглые кнопки навигации */
+    border-radius: 50px;
     font-size: 0.9rem;
     font-weight: 600;
     transition: opacity 0.2s ease, transform 0.2s ease;
@@ -105,7 +108,7 @@ body {
     opacity: 0.9;
 }
 
-/* Контейнер и Сетки */
+/* Контейнеры и сетки */
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -119,7 +122,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    scroll-margin-top: 2rem; /* Отступ сверху при скролле к секции */
+    scroll-margin-top: 2rem;
 }
 
 .section-title {
@@ -134,10 +137,10 @@ body {
     gap: 1.5rem;
 }
 
-/* Карточка игры */
+/* Карточки */
 .game-card {
     background-color: var(--card-bg);
-    border-radius: 24px; /* Круглые карточки */
+    border-radius: 24px;
     overflow: hidden;
     text-decoration: none;
     color: inherit;
