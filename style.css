@@ -1,0 +1,187 @@
+:root {
+    --bg-color: #1a1f29;
+    --card-bg: #252d3a;
+    --text-color: #f3f4f6;
+    --text-muted: #9ca3af;
+    --accent: #6366f1;
+    
+    /* Цвета статусов */
+    --status-rec: #22c55e;
+    --status-played: #3b82f6;
+    --status-want: #eab308;
+    --status-not: #ef4444;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.5;
+    padding-bottom: 3rem;
+}
+
+.header {
+    text-align: center;
+    padding: 3rem 1rem 2rem;
+    background: linear-gradient(to bottom, #11151c, var(--bg-color));
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 800;
+    letter-spacing: -0.05em;
+}
+
+.header p {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+}
+
+/* Фильтры */
+.filter-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.btn {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border: 1px solid transparent;
+    padding: 0.6rem 1.2rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn:hover {
+    background-color: #2e3848;
+}
+
+.btn.active {
+    background-color: var(--accent);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+/* Сетка карточек */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+/* Карточка игры */
+.game-card {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+    animation: fadeIn 0.4s ease forwards;
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Обложка (Используем вертикальные обложки Steam 600x900) */
+.game-cover-wrap {
+    position: relative;
+    width: 100%;
+    padding-top: 135%; /* Пропорции 1:1.35 для вертикальных постеров */
+    background-color: #11151c;
+}
+
+.game-cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Контент внутри карточки */
+.game-info {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.game-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+}
+
+.game-status {
+    display: inline-block;
+    align-self: flex-start;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.05em;
+}
+
+/* Специфичные стили для плашек статуса */
+.status-recommended { background-color: rgba(34, 197, 94, 0.2); color: var(--status-rec); }
+.status-played { background-color: rgba(59, 130, 246, 0.2); color: var(--status-played); }
+.status-want-to-play { background-color: rgba(234, 179, 8, 0.2); color: var(--status-want); }
+.status-not-recommended { background-color: rgba(239, 68, 68, 0.2); color: var(--status-not); }
+
+.game-comment {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+}
+
+/* Ссылка на Steam */
+.steam-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background-color: #171d25;
+    color: #fff;
+    text-decoration: none;
+    padding: 0.6rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+    border: 1px solid #3a4a5d;
+}
+
+.steam-link:hover {
+    background-color: #232d3b;
+}
