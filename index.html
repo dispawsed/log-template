@@ -6,33 +6,35 @@
     <title>Моя Игровая Полка</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="dark-theme"> <button id="theme-toggle" class="theme-btn" aria-label="Сменить тему">🌙</button>
+<body class="dark-theme">
+
+    <button id="theme-toggle" class="theme-btn" aria-label="Сменить тему">🌙</button>
 
     <header class="header">
         <h1>Игровая Полка</h1>
         
         <nav class="nav-links" id="nav-container">
-            <a href="#section-want-to-play" id="nav-want-to-play">⏳ Хочу сыграть</a>
-            <a href="#section-played" id="nav-played">🎮 Играю</a>
             <a href="#section-recommended" id="nav-recommended">🔥 Рекомендую</a>
+            <a href="#section-playing" id="nav-playing">🎮 Играю</a>
+            <a href="#section-want-to-play" id="nav-want-to-play">⏳ Хочу сыграть</a>
             <a href="#section-not-recommended" id="nav-not-recommended">👎 Не рекомендую</a>
         </nav>
     </header>
 
     <main class="container">
-        <section class="status-section" id="section-want-to-play">
-            <h2 class="section-title">⏳ Хочу сыграть</h2>
-            <div class="games-grid" id="grid-want-to-play"></div>
-        </section>
-
-        <section class="status-section" id="section-played">
-            <h2 class="section-title">🎮 Играю</h2>
-            <div class="games-grid" id="grid-played"></div>
-        </section>
-
         <section class="status-section" id="section-recommended">
             <h2 class="section-title">🔥 Рекомендую</h2>
             <div class="games-grid" id="grid-recommended"></div>
+        </section>
+
+        <section class="status-section" id="section-playing">
+            <h2 class="section-title">🎮 Играю</h2>
+            <div class="games-grid" id="grid-playing"></div>
+        </section>
+
+        <section class="status-section" id="section-want-to-play">
+            <h2 class="section-title">⏳ Хочу сыграть</h2>
+            <div class="games-grid" id="grid-want-to-play"></div>
         </section>
 
         <section class="status-section" id="section-not-recommended">
