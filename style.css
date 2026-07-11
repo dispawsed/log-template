@@ -91,7 +91,6 @@ body {
     display: flex;
     gap: 0.75rem;
     flex-wrap: wrap;
-    justify-content: center;
 }
 
 .nav-links a {
@@ -203,4 +202,35 @@ body {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+#game-search {
+    padding: 0.6rem 1.2rem;
+    border-radius: 50px;
+    background-color: var(--nav-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    font-size: 0.9rem;
+    outline: none;
+    width: 250px; /* Фиксируем ширину поиска */
+    transition: border-color 0.3s ease;
+}
+
+.nav-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1400px; /* Совпадает с max-width в .container */
+    margin: 2rem auto 0 auto;
+    padding: 0 1.5rem; /* Совпадает с padding в .container */
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+@media (max-width: 1000px) {
+    .nav-wrapper {
+        justify-content: center;
+        text-align: center;
+    }
 }

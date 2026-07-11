@@ -45,7 +45,8 @@ const translations = {
         recommended: "🔥 Рекомендую",
         playing: "🎮 Играю",
         wantToPlay: "⏳ Хочу сыграть",
-        notRecommended: "👎 Не рекомендую"
+        notRecommended: "👎 Не рекомендую",
+        searchPlaceholder: "Поиск игр..."
     },
     en: {
         pageTitle: "Game Shelf",
@@ -53,7 +54,8 @@ const translations = {
         recommended: "🔥 Recommended",
         playing: "🎮 Playing",
         wantToPlay: "⏳ Want to Play",
-        notRecommended: "👎 Not Recommended"
+        notRecommended: "👎 Not Recommended",
+        searchPlaceholder: "Search games..."
     }
 };
 
@@ -98,6 +100,8 @@ function applyTranslations() {
     document.getElementById('title-playing').textContent = t.playing;
     document.getElementById('title-want-to-play').textContent = t.wantToPlay;
     document.getElementById('title-not-recommended').textContent = t.notRecommended;
+
+    document.getElementById('game-search').placeholder = t.searchPlaceholder;
 }
 
 function initGallery() {
@@ -149,8 +153,32 @@ function initControls() {
     });
 }
 
+function initSearch() {
+    const searchInput = document.getElementById('game-search');
+    
+    searchInput.addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase();
+        const allCards = document.querySelectorAll('.game-card');
+        const sections = document.querySelectorAll('.status-section');
+
+        // Скрываем/показываем карточки
+        allCards.forEach(card => {
+            const title = card.querySelector('.game-title').textContent.toLowerCase();
+            card.style.display = title.includes(term) ? 'flex' : 'none';
+        });
+
+        // Скрываем пустые секции
+        sections.forEach(section => {
+            const visibleCards = section.querySelectorAll('.game-card[style="display: flex;"], .game-card:not([style])');
+            const hasVisible = Array.from(visibleCards).some(c => c.style.display !== 'none');
+            section.style.display = hasVisible ? 'flex' : 'none';
+        });
+    });
+}
+
 window.addEventListener('DOMContentLoaded', () => {
     initGallery();
     initControls();
+    initSearch();
     applyTranslations(); // Устанавливаем язык при старте
 });
