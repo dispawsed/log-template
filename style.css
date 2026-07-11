@@ -17,7 +17,7 @@
     --glow-color: rgba(99, 102, 241, 0.08);
     --border-color: rgba(0, 0, 0, 0.05);
     --border-hover: rgba(0, 0, 0, 0.1);
-    --nav-bg: #e2e8f0;
+    --nav-bg: #ffffff; /* Цвет кнопок равен цвету карточек */
 }
 
 * {
@@ -39,12 +39,17 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Кнопка смены темы с исправленным выравниванием */
-.theme-btn {
+/* Контейнер для кнопок управления в углу */
+.controls-wrapper {
     position: fixed;
     top: 1.5rem;
     right: 1.5rem;
     z-index: 100;
+    display: flex;
+    gap: 0.75rem;
+}
+
+.control-btn {
     background-color: var(--card-bg);
     border: 1px solid var(--border-hover);
     color: var(--text-main);
@@ -52,23 +57,21 @@ body {
     height: 45px;
     border-radius: 50%;
     cursor: pointer;
-    font-size: 1.2rem;
-    
-    /* Идеальное центрирование содержимого */
+    font-size: 1rem;
+    font-weight: 700;
     display: flex;
     align-items: center;
     justify-content: center;
-    line-height: 1; 
-    
+    line-height: 1;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    transition: transform 0.2s ease, background-color 0.3s ease;
+    transition: transform 0.2s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 
-.theme-btn:hover {
+.control-btn:hover {
     transform: scale(1.1);
 }
 
-/* Шапка и навигация */
+/* Шапка сайта */
 .header {
     padding: 5rem 1rem 3rem;
     text-align: center;
@@ -86,7 +89,7 @@ body {
 
 .nav-links {
     display: flex;
-    gap: 1rem;
+    gap: 0.75rem;
     flex-wrap: wrap;
     justify-content: center;
 }
@@ -95,22 +98,22 @@ body {
     color: var(--text-main);
     text-decoration: none;
     background-color: var(--nav-bg);
-    padding: 0.6rem 1.2rem;
+    padding: 0.6rem 1.4rem;
     border-radius: 50px;
     font-size: 0.9rem;
     font-weight: 600;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition: transform 0.2s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.2s ease;
     border: 1px solid var(--border-color);
 }
 
 .nav-links a:hover {
     transform: translateY(-2px);
-    opacity: 0.9;
+    border-color: var(--border-hover);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
-/* Контейнеры и сетки */
 .container {
-    max-width: 1200px;
+    max-width: 1400px; /* Немного расширим под 5 колонок */
     margin: 0 auto;
     padding: 0 1.5rem;
     display: flex;
@@ -131,13 +134,22 @@ body {
     letter-spacing: -0.02em;
 }
 
+/* Сетка GRID строго на 5 элементов в ряд */
 .games-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(5, 1fr);
     gap: 1.5rem;
 }
 
-/* Карточки */
+/* Адаптив для планшетов и мобилок */
+@media (max-width: 1100px) {
+    .games-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 700px) {
+    .games-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Карточка игры */
 .game-card {
     background-color: var(--card-bg);
     border-radius: 24px;
@@ -185,7 +197,7 @@ body {
 }
 
 .game-title {
-    font-size: 1.05rem;
+    font-size: 1.01rem;
     font-weight: 600;
     line-height: 1.3;
     white-space: nowrap;

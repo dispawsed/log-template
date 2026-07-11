@@ -3,42 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Моя Игровая Полка</title>
+    <title>Игровая Полка</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark-theme">
 
-    <button id="theme-toggle" class="theme-btn" aria-label="Сменить тему">🌙</button>
+    <div class="controls-wrapper">
+        <button id="lang-toggle" class="control-btn" aria-label="Сменить язык">EN</button>
+        <button id="theme-toggle" class="control-btn" aria-label="Сменить тему">🌙</button>
+    </div>
 
     <header class="header">
-        <h1>Игровая Полка</h1>
+        <h1 id="main-title">Игровая Полка</h1>
         
         <nav class="nav-links" id="nav-container">
-            <a href="#section-recommended" id="nav-recommended">🔥 Рекомендую</a>
-            <a href="#section-playing" id="nav-playing">🎮 Играю</a>
-            <a href="#section-want-to-play" id="nav-want-to-play">⏳ Хочу сыграть</a>
-            <a href="#section-not-recommended" id="nav-not-recommended">👎 Не рекомендую</a>
+            <a href="#section-recommended" id="nav-recommended"></a>
+            <a href="#section-playing" id="nav-playing"></a>
+            <a href="#section-want-to-play" id="nav-want-to-play"></a>
+            <a href="#section-not-recommended" id="nav-not-recommended"></a>
         </nav>
     </header>
 
     <main class="container">
         <section class="status-section" id="section-recommended">
-            <h2 class="section-title">🔥 Рекомендую</h2>
+            <h2 class="section-title" id="title-recommended"></h2>
             <div class="games-grid" id="grid-recommended"></div>
         </section>
 
         <section class="status-section" id="section-playing">
-            <h2 class="section-title">🎮 Играю</h2>
+            <h2 class="section-title" id="title-playing"></h2>
             <div class="games-grid" id="grid-playing"></div>
         </section>
 
         <section class="status-section" id="section-want-to-play">
-            <h2 class="section-title">⏳ Хочу сыграть</h2>
+            <h2 class="section-title" id="title-want-to-play"></h2>
             <div class="games-grid" id="grid-want-to-play"></div>
         </section>
 
         <section class="status-section" id="section-not-recommended">
-            <h2 class="section-title">👎 Не рекомендую</h2>
+            <h2 class="section-title" id="title-not-recommended"></h2>
             <div class="games-grid" id="grid-not-recommended"></div>
         </section>
     </main>
