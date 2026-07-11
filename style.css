@@ -152,14 +152,14 @@ body {
 .game-card {
     background-color: var(--card-bg);
     border-radius: 24px;
-    overflow: hidden;
+    overflow: hidden; /* ЭТО КЛЮЧЕВОЙ МОМЕНТ: обрезает всё, что вылезает за границы */
+    position: relative; /* Бейджик будет позиционироваться относительно этого блока */
     text-decoration: none;
     color: inherit;
     display: flex;
     flex-direction: column;
-    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
     border: 1px solid var(--border-color);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .game-card:hover {
@@ -169,7 +169,7 @@ body {
 }
 
 .game-cover-wrap {
-    position: relative;
+    position: relative; /* Важно для абсолютного позиционирования бейджика */
     width: 100%;
     padding-top: 145%;
     background-color: rgba(0,0,0,0.1);
@@ -233,4 +233,20 @@ body {
         justify-content: center;
         text-align: center;
     }
+}
+
+.new-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #ef4444; 
+    color: white;
+    padding: 3px 10px;
+    border-radius: 8px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    z-index: 5; /* Ниже, чем ховер-эффекты, если нужно */
+    pointer-events: none; /* Чтобы бейджик не мешал клику на карточку */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
 }
