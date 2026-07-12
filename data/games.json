@@ -1,0 +1,205 @@
+[
+  {
+    "name": "Cyberpunk 2077",
+    "steamAppId": 1091500,
+    "igdbId": "coaih8",
+    "category": "recommended",
+    "addedAt": "2026-07-01"
+  },
+  {
+    "name": "The Witcher 3: Wild Hunt",
+    "steamAppId": 292030,
+    "igdbId": "coaarl",
+    "category": "recommended",
+    "addedAt": "2025-01-01"
+  },
+  {
+    "name": "Elden Ring",
+    "steamAppId": 1245620,
+    "igdbId": "co1q3k",
+    "category": "recommended",
+    "addedAt": "2025-01-01"
+  },
+  {
+    "name": "Portal 2",
+    "steamAppId": 620,
+    "igdbId": "co1q3k",
+    "category": "recommended",
+    "addedAt": "2025-01-01"
+  },
+  {
+    "name": "Red Dead Redemption 2",
+    "steamAppId": 1174180,
+    "igdbId": "co1q3k",
+    "category": "recommended",
+    "addedAt": "2025-01-01"
+  },
+  {
+    "name": "Hades",
+    "steamAppId": 1145360,
+    "igdbId": "co1q3k",
+    "category": "recommended",
+    "addedAt": "2025-01-01"
+  },
+  {
+    "name": "Persona 5 Royal",
+    "steamAppId": 1687950,
+    "igdbId": "co1q3k",
+    "category": "recommended",
+    "addedAt": "2026-07-01"
+  },
+  {
+    "name": "Minecraft",
+    "gameUrl": "https://www.xbox.com/en-us/games/store/minecraft/9MVXMVT8ZKWC",
+    "igdbId": "co8fu7",
+    "category": "recommended",
+    "addedAt": "2026-07-13"
+  },
+  {
+    "name": "Death Stranding",
+    "steamAppId": 1190460,
+    "igdbId": "co1q3k",
+    "category": "playing",
+    "addedAt": "2026-07-01"
+  },
+  {
+    "name": "Grand Theft Auto V",
+    "steamAppId": 271590,
+    "igdbId": "co1q3k",
+    "category": "playing",
+    "addedAt": "2025-01-01"
+  },
+  {
+    "name": "Balatro",
+    "steamAppId": 2379780,
+    "igdbId": "co1q3k",
+    "category": "playing",
+    "addedAt": "2025-01-01"
+  },
+  {
+    "name": "Dota 2",
+    "steamAppId": 570,
+    "igdbId": "co1q3k",
+    "category": "playing",
+    "addedAt": "2025-01-01"
+  },
+  {
+    "name": "Counter-Strike 2",
+    "steamAppId": 730,
+    "igdbId": "co1q3k",
+    "category": "playing",
+    "addedAt": "2025-01-01"
+  },
+  {
+    "name": "Helldivers 2",
+    "steamAppId": 553850,
+    "igdbId": "co1q3k",
+    "category": "playing",
+    "addedAt": "2025-01-01"
+  },
+  {
+    "name": "Forza Horizon 5",
+    "steamAppId": 1551360,
+    "igdbId": "co1q3k",
+    "category": "playing",
+    "addedAt": "2026-07-01"
+  },
+  {
+    "name": "Hades II",
+    "steamAppId": 1145350,
+    "igdbId": "co1q3k",
+    "category": "want-to-play",
+    "addedAt": "2026-07-01"
+  },
+  {
+    "name": "Alan Wake 2",
+    "steamAppId": 2603300,
+    "igdbId": "co1q3k",
+    "category": "want-to-play",
+    "addedAt": "2025-01-01"
+  },
+  {
+    "name": "Baldur's Gate 3",
+    "steamAppId": 1086940,
+    "igdbId": "co1q3k",
+    "category": "want-to-play",
+    "addedAt": "2025-01-01"
+  },
+  {
+    "name": "Resident Evil 4",
+    "steamAppId": 2050650,
+    "igdbId": "co1q3k",
+    "category": "want-to-play",
+    "addedAt": "2025-01-01"
+  },
+  {
+    "name": "Monster Hunter: Wilds",
+    "steamAppId": 2246340,
+    "igdbId": "co1q3k",
+    "category": "want-to-play",
+    "addedAt": "2025-01-01"
+  },
+  {
+    "name": "Kingdom Come: Deliverance II",
+    "steamAppId": 1771300,
+    "igdbId": "co1q3k",
+    "category": "want-to-play",
+    "addedAt": "2025-01-01"
+  },
+  {
+    "name": "Mafia: The Old Country",
+    "steamAppId": 3014160,
+    "igdbId": "co1q3k",
+    "category": "want-to-play",
+    "addedAt": "2026-07-01"
+  },
+  {
+    "name": "The Day Before",
+    "steamAppId": 1372880,
+    "igdbId": "co1q3k",
+    "category": "not-recommended",
+    "addedAt": "2026-07-01"
+  },
+  {
+    "name": "FlatOut 3: Chaos & Destruction",
+    "steamAppId": 201790,
+    "igdbId": "co1q3k",
+    "category": "not-recommended",
+    "addedAt": "2025-01-01"
+  },
+  {
+    "name": "Overwatch 2",
+    "steamAppId": 2357570,
+    "igdbId": "co1q3k",
+    "category": "not-recommended",
+    "addedAt": "2025-01-01"
+  },
+  {
+    "name": "Suicide Squad: Kill the Justice League",
+    "steamAppId": 315940,
+    "igdbId": "co1q3k",
+    "category": "not-recommended",
+    "addedAt": "2025-01-01"
+  },
+  {
+    "name": "The Lord of the Rings: Gollum",
+    "steamAppId": 1265780,
+    "igdbId": "co1q3k",
+    "category": "not-recommended",
+    "addedAt": "2025-01-01"
+  },
+  {
+    "name": "Concord",
+    "steamAppId": 2951900,
+    "igdbId": "co1q3k",
+    "category": "not-recommended",
+    "addedAt": "2025-01-01"
+  },
+  {
+    "name": "Starfield",
+    "steamAppId": 1716740,
+    "igdbId": "co1q3k",
+    "category": "not-recommended",
+    "addedAt": "2026-07-01"
+  }
+]

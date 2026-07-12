@@ -1,0 +1,24 @@
+{
+    "ru": {
+        "title": "Игровая Полка",
+        "categories": {
+            "recommended": "🔥 Рекомендую",
+            "playing": "🕹️ Играю",
+            "wantToPlay": "⏳ Хочу сыграть",
+            "notRecommended": "👎 Не рекомендую"
+        },
+        "searchPlaceholder": "Поиск игр...",
+        "newLabel": "Новая"
+    },
+    "en": {
+        "title": "Game Shelf",
+        "categories": {
+            "recommended": "🔥 Recommended",
+            "playing": "🕹️ Playing",
+            "wantToPlay": "⏳ Want to play",
+            "notRecommended": "👎 Not Recommended"
+        },
+        "searchPlaceholder": "Search games...",
+        "newLabel": "New"
+    }
+}
