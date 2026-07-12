@@ -20,7 +20,7 @@ async function initApp() {
         initSearch();
         applyTranslations();
     } catch (err) {
-        console.error("Ошибка загрузки данных:", err);
+        console.error("Internal server error:", err);
     }
 }
 
@@ -28,10 +28,8 @@ function createGameCard(game) {
     const isGameNew = isNew(game.addedAt);
     const label = translations[currentLang].newLabel;
     
-    // Ссылка: приоритет у gameUrl, если нет — Steam
     const gameUrl = game.gameUrl || `https://store.steampowered.com/app/${game.steamAppId}`;
     
-    // Картинка: всегда через IGDB
     const coverUrl = `https://images.igdb.com/igdb/image/upload/t_cover_big/${game.igdbId}.webp`;
 
     const cardLink = document.createElement('a');
@@ -52,20 +50,17 @@ function createGameCard(game) {
     return cardLink;
 }
 
-// Применяет текстовые переводы без перезаписи самих сеток с играми
 function applyTranslations() {
     const t = translations[currentLang];
     
     document.title = t.title;
     document.getElementById('main-title').textContent = t.title;
 
-    // Тексты навигации
     document.getElementById('nav-recommended').textContent = t.categories.recommended;
     document.getElementById('nav-playing').textContent = t.categories.playing;
     document.getElementById('nav-want-to-play').textContent = t.categories.wantToPlay;
     document.getElementById('nav-not-recommended').textContent = t.categories.notRecommended;
 
-    // Заголовки секций
     document.getElementById('title-recommended').textContent = t.categories.recommended;
     document.getElementById('title-playing').textContent = t.categories.playing;
     document.getElementById('title-want-to-play').textContent = t.categories.wantToPlay;
@@ -87,7 +82,6 @@ function initGallery() {
             return;
         }
         
-        // Сортировка: новые -> алфавит
         currentGames.sort((a, b) => {
             if (isNew(a.addedAt) !== isNew(b.addedAt)) return isNew(a.addedAt) ? -1 : 1;
             return a.name.localeCompare(b.name);
@@ -101,20 +95,27 @@ function initGallery() {
 }
 
 function initControls() {
-    // Логика смены темы
     const themeBtn = document.getElementById('theme-toggle');
+    const langBtn = document.getElementById('lang-toggle');
+
+    const updateThemeIcon = () => {
+        const isDark = document.body.classList.contains('dark-theme');
+
+        themeBtn.textContent = isDark ? '☀️' : '🌙';
+    };
+
+    updateThemeIcon();
+
     themeBtn.addEventListener('click', () => {
         if (document.body.classList.contains('dark-theme')) {
             document.body.classList.replace('dark-theme', 'light-theme');
-            themeBtn.textContent = '☀️';
         } else {
             document.body.classList.replace('light-theme', 'dark-theme');
-            themeBtn.textContent = '🌙';
         }
+
+        updateThemeIcon();
     });
 
-    // Логика смены языка
-    const langBtn = document.getElementById('lang-toggle');
     langBtn.addEventListener('click', () => {
         currentLang = currentLang === 'ru' ? 'en' : 'ru';
         langBtn.textContent = currentLang === 'ru' ? 'EN' : 'RU';
