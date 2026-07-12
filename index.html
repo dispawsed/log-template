@@ -1,56 +1,55 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Игровая Полка</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body class="dark-theme">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>dispawsed's playlog</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body class="dark-theme">
 
-    <div class="controls-wrapper">
-        <button id="lang-toggle" class="control-btn" aria-label="Сменить язык">EN</button>
-        <button id="theme-toggle" class="control-btn" aria-label="Сменить тему">🌙</button>
-    </div>
-
-    <header class="header">
-        <h1 id="main-title">Игровая Полка</h1>
-        
-        <!-- Контейнер, выровненный по ширине основной сетки -->
-        <div class="nav-wrapper">
-            <nav class="nav-links">
-                <a href="#section-recommended" id="nav-recommended"></a>
-                <a href="#section-playing" id="nav-playing"></a>
-                <a href="#section-want-to-play" id="nav-want-to-play"></a>
-                <a href="#section-not-recommended" id="nav-not-recommended"></a>
-            </nav>
-            
-            <input type="text" id="game-search" placeholder="...">
+        <div class="controls-wrapper">
+            <button id="lang-toggle" class="control-btn">RU</button>
+            <button id="theme-toggle" class="control-btn">☀️</button>
         </div>
-    </header>
 
-    <main class="container">
-        <section class="category-section" id="section-recommended">
-            <h2 class="section-title" id="title-recommended"></h2>
-            <div class="games-grid" id="grid-recommended"></div>
-        </section>
+        <header class="header">
+            <h1 id="main-title">dispawsed's playlog</h1>
+            
+            <div class="nav-wrapper">
+                <nav class="nav-links">
+                    <a href="#section-recommended" id="nav-recommended"></a>
+                    <a href="#section-playing" id="nav-playing"></a>
+                    <a href="#section-want-to-play" id="nav-want-to-play"></a>
+                    <a href="#section-not-recommended" id="nav-not-recommended"></a>
+                </nav>
+                
+                <input type="text" id="game-search" placeholder="...">
+            </div>
+        </header>
 
-        <section class="category-section" id="section-playing">
-            <h2 class="section-title" id="title-playing"></h2>
-            <div class="games-grid" id="grid-playing"></div>
-        </section>
+        <main class="container">
+            <section class="category-section" id="section-recommended">
+                <h2 class="section-title" id="title-recommended"></h2>
+                <div class="games-grid" id="grid-recommended"></div>
+            </section>
 
-        <section class="category-section" id="section-want-to-play">
-            <h2 class="section-title" id="title-want-to-play"></h2>
-            <div class="games-grid" id="grid-want-to-play"></div>
-        </section>
+            <section class="category-section" id="section-playing">
+                <h2 class="section-title" id="title-playing"></h2>
+                <div class="games-grid" id="grid-playing"></div>
+            </section>
 
-        <section class="category-section" id="section-not-recommended">
-            <h2 class="section-title" id="title-not-recommended"></h2>
-            <div class="games-grid" id="grid-not-recommended"></div>
-        </section>
-    </main>
+            <section class="category-section" id="section-want-to-play">
+                <h2 class="section-title" id="title-want-to-play"></h2>
+                <div class="games-grid" id="grid-want-to-play"></div>
+            </section>
 
-    <script src="app.js"></script>
-</body>
+            <section class="category-section" id="section-not-recommended">
+                <h2 class="section-title" id="title-not-recommended"></h2>
+                <div class="games-grid" id="grid-not-recommended"></div>
+            </section>
+        </main>
+
+        <script src="app.js"></script>
+    </body>
 </html>

@@ -10,14 +10,14 @@
 }
 
 .light-theme {
-    --bg-color: #f1f5f9;      /* Чуть серый фон для контраста с белыми карточками */
-    --card-bg: #ffffff;       /* Чистый белый для карточек */
-    --text-main: #1e293b;     /* Почти черный для лучшей читаемости */
+    --bg-color: #f1f5f9;
+    --card-bg: #ffffff;
+    --text-main: #1e293b;
     --text-muted: #475569;
-    --border-color: #e2e8f0;  /* Более видимая граница */
+    --border-color: #e2e8f0;
     --border-hover: #cbd5e1;
     --nav-bg: #ffffff;
-    --glow-color: rgba(99, 102, 241, 0.15); /* Чуть заметнее свечение */
+    --glow-color: rgba(99, 102, 241, 0.15);
 }
 
 * {
@@ -39,7 +39,6 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Контейнер для кнопок управления в углу */
 .controls-wrapper {
     position: fixed;
     top: 1.5rem;
@@ -68,10 +67,9 @@ body {
 }
 
 .control-btn:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
-/* Шапка сайта */
 .header {
     padding: 5rem 1rem 3rem;
     text-align: center;
@@ -91,11 +89,10 @@ body {
     display: flex;
     gap: 0.75rem;
     flex-wrap: wrap;
-    align-items: center; /* Центрирует кнопки целиком, если они разной высоты */
+    align-items: center;
 }
 
 .nav-links a {
-    /* Добавляем flex сюда, чтобы центрировать текст внутри кнопки */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -108,7 +105,6 @@ body {
     font-size: 0.9rem;
     font-weight: 600;
     
-    /* Убираем лишние интервалы, которые могли двигать текст */
     line-height: 1; 
     
     border: 1px solid var(--border-color);
@@ -122,7 +118,7 @@ body {
 }
 
 .container {
-    max-width: 1400px; /* Немного расширим под 5 колонок */
+    max-width: 1400px;
     margin: 0 auto;
     padding: 0 1.5rem;
     display: flex;
@@ -143,14 +139,12 @@ body {
     letter-spacing: -0.02em;
 }
 
-/* Сетка GRID строго на 5 элементов в ряд */
 .games-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 1.5rem;
 }
 
-/* Адаптив для планшетов и мобилок */
 @media (max-width: 1100px) {
     .games-grid { grid-template-columns: repeat(3, 1fr); }
 }
@@ -158,12 +152,11 @@ body {
     .games-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* Карточка игры */
 .game-card {
     background-color: var(--card-bg);
     border-radius: 24px;
-    overflow: hidden; /* ЭТО КЛЮЧЕВОЙ МОМЕНТ: обрезает всё, что вылезает за границы */
-    position: relative; /* Бейджик будет позиционироваться относительно этого блока */
+    overflow: hidden;
+    position: relative;
     text-decoration: none;
     color: inherit;
     display: flex;
@@ -180,7 +173,7 @@ body {
 }
 
 .game-cover-wrap {
-    position: relative; /* Важно для абсолютного позиционирования бейджика */
+    position: relative;
     width: 100%;
     padding-top: 145%;
     background-color: rgba(0,0,0,0.1);
@@ -223,7 +216,7 @@ body {
     color: var(--text-main);
     font-size: 0.9rem;
     outline: none;
-    width: 250px; /* Фиксируем ширину поиска */
+    width: 250px;
     transition: border-color 0.3s ease;
 }
 
@@ -234,7 +227,7 @@ body {
 }
 
 #game-search:focus {
-    border-color: #6366f1; /* Индиго для фокуса */
+    border-color: #6366f1;
     box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
 }
 
@@ -243,9 +236,9 @@ body {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    max-width: 1400px; /* Совпадает с max-width в .container */
+    max-width: 1400px;
     margin: 2rem auto 0 auto;
-    padding: 0 1.5rem; /* Совпадает с padding в .container */
+    padding: 0 1.5rem;
     flex-wrap: wrap;
     gap: 1rem;
 }
@@ -268,8 +261,12 @@ body {
     font-size: 0.7rem;
     font-weight: 800;
     text-transform: uppercase;
-    z-index: 5; /* Ниже, чем ховер-эффекты, если нужно */
-    pointer-events: none; /* Чтобы бейджик не мешал клику на карточку */
+    z-index: 5;
+    pointer-events: none;
     box-shadow: 0 2px 4px rgba(0,0,0,0.15);
     border: 1px solid rgba(255,255,255,0.2);
+}
+
+.hidden {
+    display: none !important;
 }
