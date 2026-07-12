@@ -1,40 +1,41 @@
 // База данных: ровно по 7 игр в каждой категории
 const gamesData = [
     // 🔥 Recommended
-    { title: "Cyberpunk 2077", appId: 1091500, status: "recommended", addedAt: "2026-07-01" },
-    { title: "The Witcher 3: Wild Hunt", appId: 292030, status: "recommended", addedAt: "2025-01-01" },
-    { title: "Elden Ring", appId: 1245620, status: "recommended", addedAt: "2025-01-01" },
-    { title: "Portal 2", appId: 620, status: "recommended", addedAt: "2025-01-01" },
-    { title: "Red Dead Redemption 2", appId: 1174180, status: "recommended", addedAt: "2025-01-01" },
-    { title: "Hades", appId: 1145360, status: "recommended", addedAt: "2025-01-01" },
-    { title: "Persona 5 Royal", appId: 1687950, status: "recommended", addedAt: "2026-07-01" },
+    { name: "Cyberpunk 2077", steamAppId: 1091500, igdbId: "coaih8", status: "recommended", addedAt: "2026-07-01" },
+    { name: "The Witcher 3: Wild Hunt", steamAppId: 292030, igdbId: "coaarl", status: "recommended", addedAt: "2025-01-01" },
+    { name: "Elden Ring", steamAppId: 1245620, igdbId: "co1q3k", status: "recommended", addedAt: "2025-01-01" },
+    { name: "Portal 2", steamAppId: 620, igdbId: "co1q3k", status: "recommended", addedAt: "2025-01-01" },
+    { name: "Red Dead Redemption 2", steamAppId: 1174180, igdbId: "co1q3k", status: "recommended", addedAt: "2025-01-01" },
+    { name: "Hades", steamAppId: 1145360, igdbId: "co1q3k", status: "recommended", addedAt: "2025-01-01" },
+    { name: "Persona 5 Royal", steamAppId: 1687950, igdbId: "co1q3k", status: "recommended", addedAt: "2026-07-01" },
+    { name: "Minecraft", gameUrl: "https://www.xbox.com/en-us/games/store/minecraft/9MVXMVT8ZKWC", igdbId: "co8fu7", status: "recommended", addedAt: "2026-07-13" },
 
     // 🎮 Playing
-    { title: "Death Stranding", appId: 1190460, status: "playing", addedAt: "2026-07-01" },
-    { title: "Grand Theft Auto V", appId: 271590, status: "playing", addedAt: "2025-01-01" },
-    { title: "Balatro", appId: 2379780, status: "playing", addedAt: "2025-01-01" },
-    { title: "Dota 2", appId: 570, status: "playing", addedAt: "2025-01-01" },
-    { title: "Counter-Strike 2", appId: 730, status: "playing", addedAt: "2025-01-01" },
-    { title: "Helldivers 2", appId: 553850, status: "playing", addedAt: "2025-01-01" },
-    { title: "Forza Horizon 5", appId: 1551360, status: "playing", addedAt: "2026-07-01" },
+    { name: "Death Stranding", steamAppId: 1190460, igdbId: "co1q3k", status: "playing", addedAt: "2026-07-01" },
+    { name: "Grand Theft Auto V", steamAppId: 271590, igdbId: "co1q3k", status: "playing", addedAt: "2025-01-01" },
+    { name: "Balatro", steamAppId: 2379780, igdbId: "co1q3k", status: "playing", addedAt: "2025-01-01" },
+    { name: "Dota 2", steamAppId: 570, igdbId: "co1q3k", status: "playing", addedAt: "2025-01-01" },
+    { name: "Counter-Strike 2", steamAppId: 730, igdbId: "co1q3k", status: "playing", addedAt: "2025-01-01" },
+    { name: "Helldivers 2", steamAppId: 553850, igdbId: "co1q3k", status: "playing", addedAt: "2025-01-01" },
+    { name: "Forza Horizon 5", steamAppId: 1551360, igdbId: "co1q3k", status: "playing", addedAt: "2026-07-01" },
 
     // ⏳ Want to play
-    { title: "Hades II", appId: 1145350, status: "want-to-play", addedAt: "2026-07-01" },
-    { title: "Alan Wake 2", appId: 2603300, status: "want-to-play", addedAt: "2025-01-01" },
-    { title: "Baldur's Gate 3", appId: 1086940, status: "want-to-play", addedAt: "2025-01-01" },
-    { title: "Resident Evil 4", appId: 2050650, status: "want-to-play", addedAt: "2025-01-01" },
-    { title: "Monster Hunter: Wilds", appId: 2246340, status: "want-to-play", addedAt: "2025-01-01" },
-    { title: "Kingdom Come: Deliverance II", appId: 1771300, status: "want-to-play", addedAt: "2025-01-01" },
-    { title: "Mafia: The Old Country", appId: 3014160, status: "want-to-play", addedAt: "2026-07-01" },
+    { name: "Hades II", steamAppId: 1145350, igdbId: "co1q3k", status: "want-to-play", addedAt: "2026-07-01" },
+    { name: "Alan Wake 2", steamAppId: 2603300, igdbId: "co1q3k", status: "want-to-play", addedAt: "2025-01-01" },
+    { name: "Baldur's Gate 3", steamAppId: 1086940, igdbId: "co1q3k", status: "want-to-play", addedAt: "2025-01-01" },
+    { name: "Resident Evil 4", steamAppId: 2050650, igdbId: "co1q3k", status: "want-to-play", addedAt: "2025-01-01" },
+    { name: "Monster Hunter: Wilds", steamAppId: 2246340, igdbId: "co1q3k", status: "want-to-play", addedAt: "2025-01-01" },
+    { name: "Kingdom Come: Deliverance II", steamAppId: 1771300, igdbId: "co1q3k", status: "want-to-play", addedAt: "2025-01-01" },
+    { name: "Mafia: The Old Country", steamAppId: 3014160, igdbId: "co1q3k", status: "want-to-play", addedAt: "2026-07-01" },
 
     // 👎 Not recommended
-    { title: "The Day Before", appId: 1372880, status: "not-recommended", addedAt: "2026-07-01" },
-    { title: "FlatOut 3: Chaos & Destruction", appId: 201790, status: "not-recommended", addedAt: "2025-01-01" },
-    { title: "Overwatch 2", appId: 2357570, status: "not-recommended", addedAt: "2025-01-01" },
-    { title: "Suicide Squad: Kill the Justice League", appId: 315940, status: "not-recommended", addedAt: "2025-01-01" },
-    { title: "The Lord of the Rings: Gollum", appId: 1265780, status: "not-recommended", addedAt: "2025-01-01" },
-    { title: "Concord", appId: 2951900, status: "not-recommended", addedAt: "2025-01-01" },
-    { title: "Starfield", appId: 1716740, status: "not-recommended", addedAt: "2026-07-01" }
+    { name: "The Day Before", steamAppId: 1372880, igdbId: "co1q3k", status: "not-recommended", addedAt: "2026-07-01" },
+    { name: "FlatOut 3: Chaos & Destruction", steamAppId: 201790, igdbId: "co1q3k", status: "not-recommended", addedAt: "2025-01-01" },
+    { name: "Overwatch 2", steamAppId: 2357570, igdbId: "co1q3k", status: "not-recommended", addedAt: "2025-01-01" },
+    { name: "Suicide Squad: Kill the Justice League", steamAppId: 315940, igdbId: "co1q3k", status: "not-recommended", addedAt: "2025-01-01" },
+    { name: "The Lord of the Rings: Gollum", steamAppId: 1265780, igdbId: "co1q3k", status: "not-recommended", addedAt: "2025-01-01" },
+    { name: "Concord", steamAppId: 2951900, igdbId: "co1q3k", status: "not-recommended", addedAt: "2025-01-01" },
+    { name: "Starfield", steamAppId: 1716740, igdbId: "co1q3k", status: "not-recommended", addedAt: "2026-07-01" }
 ];
 
 // Переводы для локализации
@@ -66,14 +67,17 @@ const categories = ['recommended', 'playing', 'want-to-play', 'not-recommended']
 let currentLang = 'ru';
 
 function createGameCard(game) {
-    const coverUrl = `https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${game.appId}/library_600x900.jpg`;
-    const steamUrl = `https://store.steampowered.com/app/${game.appId}`;
-
     const isGameNew = isNew(game.addedAt);
     const label = translations[currentLang].newLabel;
+    
+    // Ссылка: приоритет у gameUrl, если нет — Steam
+    const gameUrl = game.gameUrl || `https://store.steampowered.com/app/${game.steamAppId}`;
+    
+    // Картинка: всегда через IGDB
+    const coverUrl = `https://images.igdb.com/igdb/image/upload/t_cover_big/${game.igdbId}.webp`;
 
     const cardLink = document.createElement('a');
-    cardLink.href = steamUrl;
+    cardLink.href = gameUrl;
     cardLink.target = "_blank";
     cardLink.rel = "noopener noreferrer";
     cardLink.className = 'game-card';
@@ -81,10 +85,10 @@ function createGameCard(game) {
     cardLink.innerHTML = `
         ${isGameNew ? `<div class="new-badge">${label}</div>` : ''}
         <div class="game-cover-wrap">
-            <img class="game-cover" src="${coverUrl}" alt="${game.title}" loading="lazy">
+            <img class="game-cover" src="${coverUrl}" alt="${game.name}" loading="lazy">
         </div>
         <div class="game-info">
-            <h3 class="game-title">${game.title}</h3>
+            <h3 class="game-title">${game.name}</h3>
         </div>
     `;
     return cardLink;
@@ -113,12 +117,10 @@ function applyTranslations() {
 }
 
 function initGallery() {
-    // Используем константу
     categories.forEach(status => {
         const gridContainer = document.getElementById(`grid-${status}`);
         const sectionElement = document.getElementById(`section-${status}`);
         const navLink = document.getElementById(`nav-${status}`);
-        
         const currentGames = gamesData.filter(game => game.status === status);
         
         if (currentGames.length === 0) {
@@ -127,24 +129,17 @@ function initGallery() {
             return;
         }
         
+        // Сортировка: новые -> алфавит
         currentGames.sort((a, b) => {
-            const aNew = isNew(a.addedAt);
-            const bNew = isNew(b.addedAt);
-            
-            if (aNew !== bNew) {
-                return aNew ? -1 : 1; // Новые всегда выше
-            }
-            return a.title.localeCompare(b.title); // Если оба New или оба старые — алфавит
+            if (isNew(a.addedAt) !== isNew(b.addedAt)) return isNew(a.addedAt) ? -1 : 1;
+            return a.name.localeCompare(b.name);
         });
         
-        gridContainer.innerHTML = ''; 
-        currentGames.forEach(game => {
-            const card = createGameCard(game);
-            gridContainer.appendChild(card);
-        });
+        gridContainer.innerHTML = '';
+        currentGames.forEach(game => gridContainer.appendChild(createGameCard(game)));
     });
 
-    updateNavVisibility(); 
+    updateNavVisibility();
 }
 
 function initControls() {
@@ -172,38 +167,33 @@ function initControls() {
 }
 
 function updateNavVisibility() {
-    // Используем константу вместо создания массива каждый раз
     categories.forEach(status => {
         const section = document.getElementById(`section-${status}`);
         const navLink = document.getElementById(`nav-${status}`);
+        if (!section || !navLink) return;
         
         const visibleCards = Array.from(section.querySelectorAll('.game-card'))
             .filter(card => card.style.display !== 'none');
             
-        if (navLink) {
-            navLink.style.display = visibleCards.length > 0 ? 'inline-block' : 'none';
-        }
+        navLink.style.display = visibleCards.length > 0 ? 'inline-block' : 'none';
     });
 }
 
 function initSearch() {
     const searchInput = document.getElementById('game-search');
-    
     searchInput.addEventListener('input', (e) => {
         const term = e.target.value.toLowerCase();
-        const allCards = document.querySelectorAll('.game-card');
         
-        allCards.forEach(card => {
-            const title = card.querySelector('.game-title').textContent.toLowerCase();
-            card.style.display = title.includes(term) ? 'flex' : 'none';
+        document.querySelectorAll('.game-card').forEach(card => {
+            const name = card.querySelector('.game-title').textContent.toLowerCase();
+            card.style.display = name.includes(term) ? 'flex' : 'none';
         });
 
-        // Скрываем пустые секции
         categories.forEach(status => {
             const section = document.getElementById(`section-${status}`);
             const visibleCards = Array.from(section.querySelectorAll('.game-card'))
                 .filter(c => c.style.display !== 'none');
-            section.style.display = visibleCards.length > 0 ? 'flex' : 'none';
+            if (section) section.style.display = visibleCards.length > 0 ? 'flex' : 'none';
         });
 
         updateNavVisibility();
@@ -214,7 +204,7 @@ function isNew(addedAt) {
     const addedDate = new Date(addedAt);
     const now = new Date();
     const diffTime = Math.abs(now - addedDate);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays <= 14;
 }
 
