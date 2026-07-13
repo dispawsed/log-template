@@ -84,15 +84,17 @@ function createGameCard(game) {
 function applyTranslations() {
     const t = translations[currentLang];
     
-    document.getElementById('nav-recommended').textContent = t.categories.recommended;
-    document.getElementById('nav-playing').textContent = t.categories.playing;
-    document.getElementById('nav-want-to-play').textContent = t.categories.wantToPlay;
-    document.getElementById('nav-not-recommended').textContent = t.categories.notRecommended;
+    const update = (ids, value) => {
+        ids.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = value;
+        });
+    };
 
-    document.getElementById('title-recommended').textContent = t.categories.recommended;
-    document.getElementById('title-playing').textContent = t.categories.playing;
-    document.getElementById('title-want-to-play').textContent = t.categories.wantToPlay;
-    document.getElementById('title-not-recommended').textContent = t.categories.notRecommended;
+    update(['nav-recommended', 'title-recommended'], t.categories.recommended);
+    update(['nav-playing', 'title-playing'], t.categories.playing);
+    update(['nav-want-to-play', 'title-want-to-play'], t.categories.wantToPlay);
+    update(['nav-not-recommended', 'title-not-recommended'], t.categories.notRecommended);
 
     document.getElementById('game-search').placeholder = t.searchPlaceholder;
 }
