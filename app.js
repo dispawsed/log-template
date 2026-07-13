@@ -57,27 +57,43 @@ async function initApp() {
 
 function createGameCard(game) {
     const isGameNew = isNew(game.addedAt);
-    const label = translations[currentLang].newLabel;
     
-    const gameUrl = game.gameUrl || `https://store.steampowered.com/app/${game.steamAppId}`;
-    
-    const coverUrl = `https://images.igdb.com/igdb/image/upload/t_cover_big/${game.igdbId}.webp`;
-
     const cardLink = document.createElement('a');
-    cardLink.href = gameUrl;
+    cardLink.href = game.gameUrl || `https://store.steampowered.com/app/${game.steamAppId}`;
     cardLink.target = "_blank";
     cardLink.rel = "noopener noreferrer";
     cardLink.className = 'game-card';
+
+    if (isGameNew) {
+        const badge = document.createElement('div');
+        badge.className = 'new-badge';
+        badge.textContent = translations[currentLang].newLabel;
+        cardLink.appendChild(badge);
+    }
+
+    const coverWrap = document.createElement('div');
+    coverWrap.className = 'game-cover-wrap';
     
-    cardLink.innerHTML = `
-        ${isGameNew ? `<div class="new-badge">${label}</div>` : ''}
-        <div class="game-cover-wrap">
-            <img class="game-cover" src="${coverUrl}" alt="${game.name}" loading="lazy">
-        </div>
-        <div class="game-info">
-            <h3 class="game-title">${game.name}</h3>
-        </div>
-    `;
+    const img = document.createElement('img');
+    img.className = 'game-cover';
+    img.src = `https://images.igdb.com/igdb/image/upload/t_cover_big/${game.igdbId}.webp`;
+    img.alt = game.name;
+    img.loading = 'lazy';
+    
+    coverWrap.appendChild(img);
+    cardLink.appendChild(coverWrap);
+
+    // 3. Заголовок
+    const info = document.createElement('div');
+    info.className = 'game-info';
+    
+    const title = document.createElement('h3');
+    title.className = 'game-title';
+    title.textContent = game.name;
+    
+    info.appendChild(title);
+    cardLink.appendChild(info);
+
     return cardLink;
 }
 
