@@ -22,13 +22,12 @@ const langBtn = document.getElementById('lang-toggle');
 
 async function initApp() {
     try {
-        const savedTheme = localStorage.getItem(THEME_KEY) || DARK_THEME;
-
-        console.debug('savedTheme: ' + savedTheme);
+        const [savedTheme, savedLang] = [
+            localStorage.getItem(THEME_KEY) || DARK_THEME,
+            localStorage.getItem(LANGUAGE_KEY) || EN_LANGUAGE
+        ];
 
         document.body.classList.add(savedTheme);
-
-        const savedLang = localStorage.getItem(LANGUAGE_KEY) || EN_LANGUAGE;
         currentLang = savedLang;
 
         const [categoriesJson, gamesJson, translationsJson] = await Promise.all([
@@ -41,15 +40,15 @@ async function initApp() {
         games = gamesJson;
         translations = translationsJson;
         
-        const langBtn = document.getElementById('lang-toggle');
         if (langBtn) {
             langBtn.textContent = currentLang === RU_LANGUAGE ? EN_LANGUAGE : RU_LANGUAGE;
         }
 
+        applyTranslations();
         initGallery();
         initControls();
         initSearch();
-        applyTranslations();
+
     } catch (err) {
         console.error("Internal server error:", err);
     }
