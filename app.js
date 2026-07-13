@@ -2,6 +2,7 @@ let categories = [];
 let games = [];
 let translations = {};
 let currentLang = 'en';
+let navCache = [];
 
 const DARK_THEME = 'dark-theme';
 const LIGHT_THEME = 'light-theme';
@@ -159,17 +160,21 @@ function initControls() {
     });
 }
 
-function updateNavVisibility() {
-    categories.forEach(category => {
-        const section = document.getElementById(`section-${category}`);
-        const navLink = document.getElementById(`nav-${category}`);
+function initNavCache() {
+    navCache = categories.map(category => ({
+        section: document.getElementById(`section-${category}`),
+        navLink: document.getElementById(`nav-${category}`)
+    })).filter(item => item.section && item.navLink);
+}
 
-        if (!section || !navLink) return;
-        
-        const visibleCards = Array.from(section.querySelectorAll('.game-card'))
-            .filter(card => card.style.display !== 'none');
+function updateNavVisibility() {
+    if (navCache.length === 0) initNavCache();
+
+    navCache.forEach(({ section, navLink }) => {
+        const hasVisible = Array.from(section.querySelectorAll('.game-card'))
+            .some(card => card.style.display !== 'none');
             
-        navLink.style.display = visibleCards.length > 0 ? 'inline-block' : 'none';
+        navLink.style.display = hasVisible ? 'inline-block' : 'none';
     });
 }
 
