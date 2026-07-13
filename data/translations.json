@@ -1,6 +1,5 @@
 {
     "ru": {
-        "title": "dispawsed's playlog",
         "categories": {
             "recommended": "🔥 Рекомендую",
             "playing": "🕹️ Играю",
@@ -11,7 +10,6 @@
         "newLabel": "Новая"
     },
     "en": {
-        "title": "dispawsed's playlog",
         "categories": {
             "recommended": "🔥 Recommended",
             "playing": "🕹️ Playing",

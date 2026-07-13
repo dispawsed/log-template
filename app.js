@@ -3,8 +3,27 @@ let games = [];
 let translations = {};
 let currentLang = 'en';
 
+const DARK_THEME = 'dark-theme';
+const LIGHT_THEME = 'light-theme';
+const THEME_KEY = 'theme';
+const DARK_ICON = '🌙';
+const LIGTH_ICON = '☀️';
+
+const EN_LANGUAGE = 'en';
+const RU_LANGUAGE = 'ru';
+const LANGUAGE_KEY = 'language';
+
 async function initApp() {
     try {
+        const savedTheme = localStorage.getItem(THEME_KEY) || DARK_THEME;
+
+        console.debug('savedTheme: ' + savedTheme);
+
+        document.body.classList.add(savedTheme);
+
+        const savedLang = localStorage.getItem(LANGUAGE_KEY) || EN_LANGUAGE;
+        currentLang = savedLang;
+
         const [categoriesJson, gamesJson, translationsJson] = await Promise.all([
             fetch('data/categories.json').then(r => r.json()),
             fetch('data/games.json').then(r => r.json()),
@@ -15,6 +34,11 @@ async function initApp() {
         games = gamesJson;
         translations = translationsJson;
         
+        const langBtn = document.getElementById('lang-toggle');
+        if (langBtn) {
+            langBtn.textContent = currentLang === RU_LANGUAGE ? EN_LANGUAGE : RU_LANGUAGE;
+        }
+
         initGallery();
         initControls();
         initSearch();
@@ -53,9 +77,6 @@ function createGameCard(game) {
 function applyTranslations() {
     const t = translations[currentLang];
     
-    document.title = t.title;
-    document.getElementById('main-title').textContent = t.title;
-
     document.getElementById('nav-recommended').textContent = t.categories.recommended;
     document.getElementById('nav-playing').textContent = t.categories.playing;
     document.getElementById('nav-want-to-play').textContent = t.categories.wantToPlay;
@@ -94,31 +115,41 @@ function initGallery() {
     updateNavVisibility();
 }
 
+function updateThemeIcon() {
+    const themeBtn = document.getElementById('theme-toggle');
+
+    const isDark = document.body.classList.contains(DARK_THEME);
+
+    console.debug('isDark: ' + isDark);
+
+    themeBtn.textContent = isDark ? LIGTH_ICON : DARK_ICON;
+};
+
 function initControls() {
     const themeBtn = document.getElementById('theme-toggle');
     const langBtn = document.getElementById('lang-toggle');
 
-    const updateThemeIcon = () => {
-        const isDark = document.body.classList.contains('dark-theme');
-
-        themeBtn.textContent = isDark ? '☀️' : '🌙';
-    };
-
     updateThemeIcon();
 
     themeBtn.addEventListener('click', () => {
-        if (document.body.classList.contains('dark-theme')) {
-            document.body.classList.replace('dark-theme', 'light-theme');
+        const isDark = document.body.classList.contains(DARK_THEME);
+        
+        if (isDark) {
+            document.body.classList.replace(DARK_THEME, LIGHT_THEME);
+            localStorage.setItem(THEME_KEY, LIGHT_THEME);
         } else {
-            document.body.classList.replace('light-theme', 'dark-theme');
+            document.body.classList.replace(LIGHT_THEME, DARK_THEME);
+            localStorage.setItem(THEME_KEY, DARK_THEME);
         }
-
+        
         updateThemeIcon();
     });
 
     langBtn.addEventListener('click', () => {
-        currentLang = currentLang === 'ru' ? 'en' : 'ru';
-        langBtn.textContent = currentLang === 'ru' ? 'EN' : 'RU';
+        currentLang = currentLang === RU_LANGUAGE ? EN_LANGUAGE : RU_LANGUAGE;
+        langBtn.textContent = currentLang === RU_LANGUAGE ? EN_LANGUAGE : RU_LANGUAGE;
+        
+        localStorage.setItem(LANGUAGE_KEY, currentLang);
 
         applyTranslations();
         initGallery();
