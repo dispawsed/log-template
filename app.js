@@ -102,6 +102,7 @@ function initGallery() {
         const gridContainer = document.getElementById(`grid-${category}`);
         const sectionElement = document.getElementById(`section-${category}`);
         const navLink = document.getElementById(`nav-${category}`);
+
         const currentGames = games.filter(game => game.category === category);
         
         if (currentGames.length === 0) {
@@ -111,12 +112,22 @@ function initGallery() {
         }
         
         currentGames.sort((a, b) => {
-            if (isNew(a.addedAt) !== isNew(b.addedAt)) return isNew(a.addedAt) ? -1 : 1;
+            const aIsNew = isNew(a.addedAt);
+
+            if (aIsNew !== isNew(b.addedAt)) return aIsNew ? -1 : 1;
             return a.name.localeCompare(b.name);
         });
         
-        gridContainer.innerHTML = '';
-        currentGames.forEach(game => gridContainer.appendChild(createGameCard(game)));
+        if (gridContainer) {
+            gridContainer.innerHTML = '';
+            const fragment = document.createDocumentFragment();
+            
+            currentGames.forEach(game => {
+                fragment.appendChild(createGameCard(game));
+            });
+            
+            gridContainer.appendChild(fragment);
+        }
     });
 
     updateNavVisibility();
