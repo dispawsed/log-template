@@ -175,22 +175,35 @@ function updateNavVisibility() {
 
 function initSearch() {
     const searchInput = document.getElementById('game-search');
+    
+    const searchData = Array.from(document.querySelectorAll('.game-card')).map(card => ({
+        element: card,
+        name: card.querySelector('.game-title').textContent.toLowerCase()
+    }));
+
+    let debounceTimer;
+    
     searchInput.addEventListener('input', (e) => {
-        const term = e.target.value.toLowerCase();
-        
-        document.querySelectorAll('.game-card').forEach(card => {
-            const name = card.querySelector('.game-title').textContent.toLowerCase();
-            card.style.display = name.includes(term) ? 'flex' : 'none';
-        });
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+            const term = e.target.value.toLowerCase();
+            
+            searchData.forEach(({ element, name }) => {
+                element.style.display = name.includes(term) ? 'flex' : 'none';
+            });
 
-        categories.forEach(category => {
-            const section = document.getElementById(`section-${category}`);
-            const visibleCards = Array.from(section.querySelectorAll('.game-card'))
-                .filter(c => c.style.display !== 'none');
-            if (section) section.style.display = visibleCards.length > 0 ? 'flex' : 'none';
-        });
+            categories.forEach(category => {
+                const section = document.getElementById(`section-${category}`);
+                if (!section) return;
 
-        updateNavVisibility();
+                const hasVisible = Array.from(section.querySelectorAll('.game-card'))
+                    .some(card => card.style.display !== 'none');
+                
+                section.style.display = hasVisible ? 'flex' : 'none';
+            });
+
+            updateNavVisibility();
+        }, 100);
     });
 }
 
