@@ -3,6 +3,7 @@ let games = [];
 let translations = {};
 let currentLang = 'en';
 let navCache = [];
+let searchData = [];
 
 const DARK_THEME = 'dark-theme';
 const LIGHT_THEME = 'light-theme';
@@ -147,6 +148,7 @@ function initGallery() {
         }
     });
 
+    refreshSearchCache();
     updateNavVisibility();
 }
 
@@ -201,13 +203,15 @@ function updateNavVisibility() {
     });
 }
 
-function initSearch() {
-    const searchInput = document.getElementById('game-search');
-    
-    const searchData = Array.from(document.querySelectorAll('.game-card')).map(card => ({
+function refreshSearchCache() {
+    searchData = Array.from(document.querySelectorAll('.game-card')).map(card => ({
         element: card,
         name: card.querySelector('.game-title').textContent.toLowerCase()
     }));
+}
+
+function initSearch() {
+    const searchInput = document.getElementById('game-search');
 
     let debounceTimer;
     
