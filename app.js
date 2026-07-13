@@ -13,6 +13,9 @@ const EN_LANGUAGE = 'en';
 const RU_LANGUAGE = 'ru';
 const LANGUAGE_KEY = 'language';
 
+const NEW_THRESHOLD_MS = 14 * 24 * 60 * 60 * 1000;
+const thresholdDate = Date.now() - NEW_THRESHOLD_MS;
+
 async function initApp() {
     try {
         const savedTheme = localStorage.getItem(THEME_KEY) || DARK_THEME;
@@ -192,7 +195,7 @@ function initSearch() {
 }
 
 function isNew(addedAt) {
-    return (new Date() - new Date(addedAt)) / (1000 * 60 * 60 * 24) <= 14;
+    return new Date(addedAt).getTime() >= thresholdDate;
 }
 
 document.addEventListener('DOMContentLoaded', initApp);
