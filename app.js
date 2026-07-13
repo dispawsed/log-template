@@ -7,8 +7,8 @@ let navCache = [];
 const DARK_THEME = 'dark-theme';
 const LIGHT_THEME = 'light-theme';
 const THEME_KEY = 'theme';
-const DARK_ICON = '🌙';
-const LIGTH_ICON = '☀️';
+const MOON_ICON = '🌙';
+const SUN_ICON = '☀️';
 
 const EN_LANGUAGE = 'en';
 const RU_LANGUAGE = 'ru';
@@ -16,6 +16,9 @@ const LANGUAGE_KEY = 'language';
 
 const NEW_THRESHOLD_MS = 14 * 24 * 60 * 60 * 1000;
 const thresholdDate = Date.now() - NEW_THRESHOLD_MS;
+
+const themeBtn = document.getElementById('theme-toggle');
+const langBtn = document.getElementById('lang-toggle');
 
 async function initApp() {
     try {
@@ -119,42 +122,34 @@ function initGallery() {
     updateNavVisibility();
 }
 
-function updateThemeIcon() {
-    const themeBtn = document.getElementById('theme-toggle');
-
-    const isDark = document.body.classList.contains(DARK_THEME);
-
-    console.debug('isDark: ' + isDark);
-
-    themeBtn.textContent = isDark ? LIGTH_ICON : DARK_ICON;
-};
-
 function initControls() {
-    const themeBtn = document.getElementById('theme-toggle');
-    const langBtn = document.getElementById('lang-toggle');
+    const updateThemeIcon = () => {
+        const isDark = document.body.classList.contains(DARK_THEME);
+        themeBtn.textContent = isDark ? SUN_ICON : MOON_ICON;
+    };
+
+    const updateLanguageText = () => {
+        langBtn.textContent = (currentLang === RU_LANGUAGE) ? EN_LANGUAGE : RU_LANGUAGE;
+    };
 
     updateThemeIcon();
+    updateLanguageText();
 
     themeBtn.addEventListener('click', () => {
         const isDark = document.body.classList.contains(DARK_THEME);
+        const nextTheme = isDark ? LIGHT_THEME : DARK_THEME;
         
-        if (isDark) {
-            document.body.classList.replace(DARK_THEME, LIGHT_THEME);
-            localStorage.setItem(THEME_KEY, LIGHT_THEME);
-        } else {
-            document.body.classList.replace(LIGHT_THEME, DARK_THEME);
-            localStorage.setItem(THEME_KEY, DARK_THEME);
-        }
+        document.body.classList.replace(isDark ? DARK_THEME : LIGHT_THEME, nextTheme);
+        localStorage.setItem(THEME_KEY, nextTheme);
         
         updateThemeIcon();
     });
 
     langBtn.addEventListener('click', () => {
-        currentLang = currentLang === RU_LANGUAGE ? EN_LANGUAGE : RU_LANGUAGE;
-        langBtn.textContent = currentLang === RU_LANGUAGE ? EN_LANGUAGE : RU_LANGUAGE;
-        
+        currentLang = (currentLang === RU_LANGUAGE) ? EN_LANGUAGE : RU_LANGUAGE;
         localStorage.setItem(LANGUAGE_KEY, currentLang);
-
+        
+        updateLanguageText();
         applyTranslations();
         initGallery();
     });
