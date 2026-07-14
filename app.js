@@ -212,31 +212,55 @@ function refreshSearchCache() {
 
 function initSearch() {
     const searchInput = document.getElementById('game-search');
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialTerm = urlParams.get('search');
+    
+    if (initialTerm) {
+        searchInput.value = initialTerm;
+
+        setTimeout(() => performSearch(initialTerm), 100); 
+    }
 
     let debounceTimer;
-    
     searchInput.addEventListener('input', (e) => {
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(() => {
             const term = e.target.value.toLowerCase();
-            
-            searchData.forEach(({ element, name }) => {
-                element.style.display = name.includes(term) ? 'flex' : 'none';
-            });
-
-            categories.forEach(category => {
-                const section = document.getElementById(`section-${category}`);
-                if (!section) return;
-
-                const hasVisible = Array.from(section.querySelectorAll('.game-card'))
-                    .some(card => card.style.display !== 'none');
-                
-                section.style.display = hasVisible ? 'flex' : 'none';
-            });
-
-            updateNavVisibility();
+            performSearch(term);
+            updateSearchQueryParam(term);
         }, 100);
     });
+}
+
+function performSearch(term) {
+    searchData.forEach(({ element, name }) => {
+        element.style.display = name.includes(term) ? 'flex' : 'none';
+    });
+
+    categories.forEach(category => {
+        const section = document.getElementById(`section-${category}`);
+        if (!section) return;
+
+        const hasVisible = Array.from(section.querySelectorAll('.game-card'))
+            .some(card => card.style.display !== 'none');
+        
+        section.style.display = hasVisible ? 'flex' : 'none';
+    });
+
+    updateNavVisibility();
+}
+
+function updateSearchQueryParam(term) {
+    const url = new URL(window.location);
+
+    if (term) {
+        url.searchParams.set('search', term);
+    } else {
+        url.searchParams.delete('search');
+    }
+
+    window.history.replaceState(null, '', url);
 }
 
 function isNew(addedAt) {
