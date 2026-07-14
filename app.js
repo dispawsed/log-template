@@ -38,7 +38,10 @@ async function initApp() {
         ]);
         
         categories = categoriesJson;
-        games = gamesJson;
+        games = gamesJson.map(game => ({
+            ...game,
+            isNew: new Date(game.addedAt).getTime() >= thresholdDate
+        }));
         translations = translationsJson;
         
         if (langBtn) {
@@ -56,15 +59,13 @@ async function initApp() {
 }
 
 function createGameCard(game) {
-    const isGameNew = isNew(game.addedAt);
-    
     const cardLink = document.createElement('a');
     cardLink.href = game.gameUrl || `https://store.steampowered.com/app/${game.steamAppId}`;
     cardLink.target = "_blank";
     cardLink.rel = "noopener noreferrer";
     cardLink.className = 'game-card';
 
-    if (isGameNew) {
+    if (game.isNew) {
         const badge = document.createElement('div');
         badge.className = 'new-badge';
         badge.textContent = translations[currentLang].newLabel;
@@ -130,9 +131,8 @@ function initGallery() {
         }
         
         currentGames.sort((a, b) => {
-            const aIsNew = isNew(a.addedAt);
+            if (a.isNew !== b.isNew) return a.isNew ? -1 : 1;
 
-            if (aIsNew !== isNew(b.addedAt)) return aIsNew ? -1 : 1;
             return a.name.localeCompare(b.name);
         });
         
@@ -261,10 +261,6 @@ function updateSearchQueryParam(term) {
     }
 
     window.history.replaceState(null, '', url);
-}
-
-function isNew(addedAt) {
-    return new Date(addedAt).getTime() >= thresholdDate;
 }
 
 document.addEventListener('DOMContentLoaded', initApp);
