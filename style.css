@@ -217,8 +217,39 @@ body {
     color: var(--text-main);
     font-size: 0.9rem;
     outline: none;
-    width: 250px;
+    width: 100% !important;
     transition: border-color 0.3s ease;
+    padding-right: 2.2rem;
+}
+
+.clear-btn {
+    position: absolute;
+    right: 0.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.3rem;
+    font-weight: 300;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.clear-btn:hover {
+    color: var(--text-main);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.search-container {
+    position: relative;
+    display: inline-block;
+    width: 250px; /* Задает ширину как у старого инпута */
 }
 
 .nav-links a, #game-search {

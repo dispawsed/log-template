@@ -219,25 +219,45 @@ function refreshSearchCache() {
 
 function initSearch() {
     const searchInput = document.getElementById('game-search');
+    const clearBtn = document.getElementById('clear-search');
     
     const urlParams = new URLSearchParams(window.location.search);
     const initialTerm = urlParams.get('search');
     
+    const toggleClearButton = (term) => {
+        if (clearBtn) {
+            clearBtn.style.display = term ? 'flex' : 'none';
+        }
+    };
+    
     if (initialTerm) {
         searchInput.value = initialTerm;
+        toggleClearButton(initialTerm);
 
         setTimeout(() => performSearch(initialTerm), 100); 
     }
 
     let debounceTimer;
     searchInput.addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase();
+        toggleClearButton(term);
+        
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(() => {
-            const term = e.target.value.toLowerCase();
             performSearch(term);
             updateSearchQueryParam(term);
         }, 100);
     });
+
+    if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            toggleClearButton('');
+            performSearch('');
+            updateSearchQueryParam('');
+            searchInput.focus();
+        });
+    }
 }
 
 function performSearch(term) {
