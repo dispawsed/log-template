@@ -112,6 +112,7 @@ function applyTranslations() {
     update(['nav-playing', 'title-playing'], t.categories.playing);
     update(['nav-want-to-play', 'title-want-to-play'], t.categories.wantToPlay);
     update(['nav-not-recommended', 'title-not-recommended'], t.categories.notRecommended);
+    update(['no-results-message'], t.noResults);
 
     document.getElementById('game-search').placeholder = t.searchPlaceholder;
 }
@@ -182,6 +183,12 @@ function initControls() {
         updateLanguageText();
         applyTranslations();
         initGallery();
+
+        const searchInput = document.getElementById('game-search');
+        if (searchInput) {
+            const term = searchInput.value.toLowerCase();
+            performSearch(term); 
+        }
     });
 }
 
@@ -234,19 +241,28 @@ function initSearch() {
 }
 
 function performSearch(term) {
+    let hasAnyVisible = false;
+
     searchData.forEach(({ element, name }) => {
-        element.style.display = name.includes(term) ? 'flex' : 'none';
+        const isMatch = name.includes(term);
+        element.style.display = isMatch ? 'flex' : 'none';
+        if (isMatch) hasAnyVisible = true;
     });
 
     categories.forEach(category => {
         const section = document.getElementById(`section-${category}`);
         if (!section) return;
 
-        const hasVisible = Array.from(section.querySelectorAll('.game-card'))
+        const hasVisibleInSection = Array.from(section.querySelectorAll('.game-card'))
             .some(card => card.style.display !== 'none');
         
-        section.style.display = hasVisible ? 'flex' : 'none';
+        section.style.display = hasVisibleInSection ? 'flex' : 'none';
     });
+
+    const noResultsEl = document.getElementById('no-results-message');
+    if (noResultsEl) {
+        noResultsEl.style.display = hasAnyVisible ? 'none' : 'block';
+    }
 
     updateNavVisibility();
 }
