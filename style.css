@@ -33,7 +33,7 @@ html {
 body {
     background-color: var(--bg-color);
     color: var(--text-main);
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Open Sans', system-ui, -apple-system, sans-serif;
     padding-bottom: 5rem;
     min-height: 100vh;
     transition: background-color 0.3s ease, color 0.3s ease;
