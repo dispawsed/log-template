@@ -34,8 +34,9 @@ body {
     background-color: var(--bg-color);
     color: var(--text-main);
     font-family: 'Open Sans', system-ui, -apple-system, sans-serif;
-    padding-bottom: 5rem;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -120,11 +121,13 @@ body {
 
 .container {
     max-width: 1400px;
+    width: 100%;
     margin: 0 auto;
     padding: 0 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 5rem;
+    flex-grow: 1;
 }
 
 .category-section {
@@ -249,7 +252,7 @@ body {
 .search-container {
     position: relative;
     display: inline-block;
-    width: 250px; /* Задает ширину как у старого инпута */
+    width: 250px;
 }
 
 .nav-links a, #game-search {
@@ -305,8 +308,71 @@ body {
 
 .no-results-message {
     text-align: center;
-    padding: 3rem 1rem;
-    font-size: 1.2rem;
-    margin: 2rem 0;
+    padding: 6rem 1rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    gap: 1rem;
+}
+
+.footer {
+    background-color: var(--card-bg);
+    border-top: 1px solid var(--border-color);
+    padding: 2.5rem 0;
+    margin-top: 5rem;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.footer-copyright {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.footer-links {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-links a:hover {
     color: var(--text-main);
+    transform: translateY(-1px);
+}
+
+@media (max-width: 700px) {
+    .footer-content {
+        flex-direction: column-reverse;
+        gap: 1.2rem;
+        text-align: center;
+    }
+    
+    .footer-links {
+        justify-content: center;
+        gap: 1.5rem;
+    }
 }

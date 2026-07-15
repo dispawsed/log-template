@@ -112,7 +112,12 @@ function applyTranslations() {
     update(['nav-playing', 'title-playing'], t.categories.playing);
     update(['nav-want-to-play', 'title-want-to-play'], t.categories.wantToPlay);
     update(['nav-not-recommended', 'title-not-recommended'], t.categories.notRecommended);
+    
     update(['no-results-message'], t.noResults);
+
+    update(['footer-source'], t.footer.sourceCode);
+    update(['footer-profile'], t.footer.steamProfile);
+    update(['footer-wishlist'], t.footer.steamWishlist);
 
     document.getElementById('game-search').placeholder = t.searchPlaceholder;
 }

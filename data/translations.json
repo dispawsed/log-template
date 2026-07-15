@@ -8,7 +8,12 @@
         },
         "searchPlaceholder": "Поиск игр...",
         "newLabel": "Новая",
-        "noResults": "Игры не найдены"
+        "noResults": "🔍 Игры не найдены. Попробуйте поискать что-то другое!",
+        "footer": {
+            "sourceCode": "Исходный код",
+            "steamProfile": "Профиль Steam",
+            "steamWishlist": "Список желаемого Steam"
+        }
     },
     "en": {
         "categories": {
@@ -19,6 +24,11 @@
         },
         "searchPlaceholder": "Search games...",
         "newLabel": "New",
-        "noResults": "Games not found"
+        "noResults": "🔍 Games not found. Try searching for something else!",
+        "footer": {
+            "sourceCode": "Source Code",
+            "steamProfile": "Steam Profile",
+            "steamWishlist": "Steam Wishlist"
+        }
     }
 }
