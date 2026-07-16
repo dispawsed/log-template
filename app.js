@@ -1,4 +1,9 @@
-let categories = [];
+const RECOMMENDED_CATEGORY = 'recommended';
+const PLAYING_CATEGORY = 'playing';
+const WANT_TO_PLAY_CATEGORY = 'want-to-play';
+const NOT_RECOMMENDED_CATEGORY = 'not-recommended';
+let categories = [ RECOMMENDED_CATEGORY, PLAYING_CATEGORY, WANT_TO_PLAY_CATEGORY, NOT_RECOMMENDED_CATEGORY ];
+
 let games = [];
 let translations = {};
 let currentLang = 'en';
@@ -31,17 +36,25 @@ async function initApp() {
         document.body.classList.add(savedTheme);
         currentLang = savedLang;
 
-        const [categoriesJson, gamesJson, translationsJson] = await Promise.all([
-            fetch('data/categories.json').then(r => r.json()),
-            fetch('data/games.json').then(r => r.json()),
+        const [
+            recommendedGamesJson, 
+            playingGamesJson, 
+            wantToPlayGamesJson, 
+            notRecommendedGamesJson, 
+            translationsJson] = await Promise.all([
+            fetch('data/games.recommended.json').then(r => r.json()),
+            fetch('data/games.playing.json').then(r => r.json()),
+            fetch('data/games.want-to-play.json').then(r => r.json()),
+            fetch('data/games.not-recommended.json').then(r => r.json()),
             fetch('data/translations.json').then(r => r.json())
         ]);
-        
-        categories = categoriesJson;
-        games = gamesJson.map(game => ({
-            ...game,
-            isNew: new Date(game.addedAt).getTime() >= thresholdDate
-        }));
+
+        games = [
+            ...recommendedGamesJson.map(g => ({ ...g, isNew: new Date(g.addedAt).getTime() >= thresholdDate, category: RECOMMENDED_CATEGORY })),
+            ...playingGamesJson.map(g => ({ ...g, isNew: new Date(g.addedAt).getTime() >= thresholdDate, category: PLAYING_CATEGORY })),
+            ...wantToPlayGamesJson.map(g => ({ ...g, isNew: new Date(g.addedAt).getTime() >= thresholdDate, category: WANT_TO_PLAY_CATEGORY })),
+            ...notRecommendedGamesJson.map(g => ({ ...g, isNew: new Date(g.addedAt).getTime() >= thresholdDate, category: NOT_RECOMMENDED_CATEGORY }))
+        ];
         translations = translationsJson;
         
         if (langBtn) {
