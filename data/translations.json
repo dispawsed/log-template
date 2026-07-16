@@ -9,6 +9,10 @@
         "searchPlaceholder": "Поиск игр...",
         "newLabel": "Новая",
         "noResults": "🔍 Игры не найдены. Попробуйте поискать что-то другое!",
+        "gameStats": {
+            "added": "Дата добавления",
+            "comment": "Воспоминания"
+        },
         "footer": {
             "sourceCode": "Исходный код",
             "steamProfile": "Профиль Steam",
@@ -25,6 +29,10 @@
         "searchPlaceholder": "Search games...",
         "newLabel": "New",
         "noResults": "🔍 Games not found. Try searching for something else!",
+        "gameStats": {
+            "added": "Date added",
+            "comment": "Memories"
+        },
         "footer": {
             "sourceCode": "Source Code",
             "steamProfile": "Steam Profile",

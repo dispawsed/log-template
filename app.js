@@ -80,11 +80,35 @@ function createGameCard(game) {
     img.src = `https://images.igdb.com/igdb/image/upload/t_cover_big/${game.igdbId}.webp`;
     img.alt = game.name;
     img.loading = 'lazy';
-    
     coverWrap.appendChild(img);
+
+    const statsText = translations[currentLang].gameStats;
+    const dateObj = new Date(game.addedAt);
+    const formattedDate = dateObj.toLocaleDateString(currentLang === RU_LANGUAGE ? 'ru-RU' : 'en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+    });
+
+    const userComment = game.comment ? (currentLang === RU_LANGUAGE ? game.comment.ru : game.comment.en) : '—';
+
+    const statsOverlay = document.createElement('div');
+    statsOverlay.className = 'game-stats-overlay';
+    
+    statsOverlay.innerHTML = `
+        <div class="stats-item">
+            <span class="stats-label">${statsText.added}</span>
+            <span class="stats-value">${formattedDate}</span>
+        </div>
+        <div class="stats-item">
+            <span class="stats-label">${statsText.comment}</span>
+            <span class="stats-value comment-text">«${userComment}»</span>
+        </div>
+    `;
+    
+    coverWrap.appendChild(statsOverlay);
     cardLink.appendChild(coverWrap);
 
-    // 3. Заголовок
     const info = document.createElement('div');
     info.className = 'game-info';
     
