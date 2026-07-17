@@ -9,6 +9,7 @@ let translations = {};
 let currentLang = 'en';
 let navCache = [];
 let searchData = [];
+let isMemoriesMode = false;
 
 const DARK_THEME = 'dark-theme';
 const LIGHT_THEME = 'light-theme';
@@ -25,6 +26,7 @@ const thresholdDate = Date.now() - NEW_THRESHOLD_MS;
 
 const themeBtn = document.getElementById('theme-toggle');
 const langBtn = document.getElementById('lang-toggle');
+const memoriesBtn = document.getElementById('memories-toggle');
 
 async function initApp() {
     try {
@@ -232,6 +234,16 @@ function initControls() {
             performSearch(term); 
         }
     });
+
+    memoriesBtn.addEventListener('click', () => {
+        isMemoriesMode = !isMemoriesMode;
+        memoriesBtn.classList.toggle('active', isMemoriesMode);
+
+        updateMemoriesQueryParam(isMemoriesMode);
+
+        const searchInput = document.getElementById('game-search');
+        performSearch(searchInput ? searchInput.value.toLowerCase() : '');
+    });
 }
 
 function initNavCache() {
@@ -247,36 +259,52 @@ function updateNavVisibility() {
     navCache.forEach(({ section, navLink }) => {
         const hasVisible = Array.from(section.querySelectorAll('.game-card'))
             .some(card => card.style.display !== 'none');
-            
+
         navLink.style.display = hasVisible ? 'inline-block' : 'none';
     });
 }
 
 function refreshSearchCache() {
-    searchData = Array.from(document.querySelectorAll('.game-card')).map(card => ({
-        element: card,
-        name: card.querySelector('.game-title').textContent.toLowerCase()
-    }));
+    searchData = Array.from(document.querySelectorAll('.game-card')).map(card => {
+        const commentEl = card.querySelector('.comment-text');
+        const hasMemory = commentEl && commentEl.textContent !== '«—»' && commentEl.textContent.trim() !== '';
+
+        return {
+            element: card,
+            name: card.querySelector('.game-title').textContent.toLowerCase(),
+            hasMemory: hasMemory
+        };
+    });
 }
 
 function initSearch() {
     const searchInput = document.getElementById('game-search');
     const clearBtn = document.getElementById('clear-search');
-    
+    const memoriesBtn = document.getElementById('memories-toggle');
+
     const urlParams = new URLSearchParams(window.location.search);
     const initialTerm = urlParams.get('search');
+    const initialMemories = urlParams.get('memories') === 'true';
+
+    if (initialMemories) {
+        isMemoriesMode = true;
+        if (memoriesBtn) {
+            memoriesBtn.classList.add('active');
+        }
+    }
     
     const toggleClearButton = (term) => {
-        if (clearBtn) {
-            clearBtn.style.display = term ? 'flex' : 'none';
-        }
+        clearBtn.style.display = term ? 'flex' : 'none';
     };
     
+    // 2. Восстанавливаем текстовый поиск, если он был в URL
     if (initialTerm) {
         searchInput.value = initialTerm;
         toggleClearButton(initialTerm);
+    }
 
-        setTimeout(() => performSearch(initialTerm), 100); 
+    if (initialTerm || initialMemories) {
+        setTimeout(() => performSearch(initialTerm || ''), 100); 
     }
 
     let debounceTimer;
@@ -291,24 +319,26 @@ function initSearch() {
         }, 100);
     });
 
-    if (clearBtn) {
-        clearBtn.addEventListener('click', () => {
+    clearBtn.addEventListener('click', () => {
             searchInput.value = '';
             toggleClearButton('');
             performSearch('');
             updateSearchQueryParam('');
             searchInput.focus();
         });
-    }
 }
 
 function performSearch(term) {
     let hasAnyVisible = false;
 
-    searchData.forEach(({ element, name }) => {
+    searchData.forEach(({ element, name, hasMemory }) => {
         const isMatch = name.includes(term);
-        element.style.display = isMatch ? 'flex' : 'none';
-        if (isMatch) hasAnyVisible = true;
+        const matchesMemories = !isMemoriesMode || hasMemory;
+
+        const shouldShow = isMatch && matchesMemories;
+        element.style.display = shouldShow ? 'flex' : 'none';
+
+        if (shouldShow) hasAnyVisible = true;
     });
 
     categories.forEach(category => {
@@ -336,6 +366,18 @@ function updateSearchQueryParam(term) {
         url.searchParams.set('search', term);
     } else {
         url.searchParams.delete('search');
+    }
+
+    window.history.replaceState(null, '', url);
+}
+
+function updateMemoriesQueryParam(isActive) {
+    const url = new URL(window.location);
+
+    if (isActive) {
+        url.searchParams.set('memories', 'true');
+    } else {
+        url.searchParams.delete('memories');
     }
 
     window.history.replaceState(null, '', url);

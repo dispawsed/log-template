@@ -274,7 +274,7 @@ body {
 
 #game-search:focus {
     border-color: #6366f1;
-    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+    box-shadow: 0 0 12px rgba(99, 102, 241, 0.4);
 }
 
 .nav-wrapper {
@@ -468,4 +468,51 @@ body {
     font-style: italic;
     line-height: 1.4;
     color: var(--text-main);
+}
+
+.search-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.memories-btn {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    filter: grayscale(100%) opacity(0.6);
+}
+
+.memories-btn:hover {
+    transform: translateY(-2px);
+    border-color: var(--border-hover);
+    filter: grayscale(0%) opacity(1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.memories-btn.active {
+    background-color: rgba(99, 102, 241, 0.15);
+    border-color: #6366f1;
+    filter: grayscale(0%) opacity(1);
+    box-shadow: 0 0 12px rgba(99, 102, 241, 0.4);
+}
+
+.memories-btn.active:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.5);
+}
+
+#game-search {
+    padding-left: 1.2rem !important;
 }
