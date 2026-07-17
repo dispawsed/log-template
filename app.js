@@ -51,12 +51,19 @@ async function initApp() {
             fetch('data/translations.json').then(r => r.json())
         ]);
 
-        games = [
-            ...recommendedGamesJson.map(g => ({ ...g, isNew: new Date(g.addedAt).getTime() >= thresholdDate, category: RECOMMENDED_CATEGORY })),
-            ...playingGamesJson.map(g => ({ ...g, isNew: new Date(g.addedAt).getTime() >= thresholdDate, category: PLAYING_CATEGORY })),
-            ...wantToPlayGamesJson.map(g => ({ ...g, isNew: new Date(g.addedAt).getTime() >= thresholdDate, category: WANT_TO_PLAY_CATEGORY })),
-            ...notRecommendedGamesJson.map(g => ({ ...g, isNew: new Date(g.addedAt).getTime() >= thresholdDate, category: NOT_RECOMMENDED_CATEGORY }))
+        const rawGames = [
+            ...recommendedGamesJson.map(g => ({ ...g, category: RECOMMENDED_CATEGORY })),
+            ...playingGamesJson.map(g => ({ ...g, category: PLAYING_CATEGORY })),
+            ...wantToPlayGamesJson.map(g => ({ ...g, category: WANT_TO_PLAY_CATEGORY })),
+            ...notRecommendedGamesJson.map(g => ({ ...g, category: NOT_RECOMMENDED_CATEGORY }))
         ];
+
+        games = rawGames.map((game, index) => ({
+            ...game,
+            id: index + 1,
+            isNew: new Date(game.addedAt).getTime() >= thresholdDate
+        }));
+
         translations = translationsJson;
         
         if (langBtn) {
@@ -79,6 +86,7 @@ function createGameCard(game) {
     cardLink.target = "_blank";
     cardLink.rel = "noopener noreferrer";
     cardLink.className = 'game-card';
+    cardLink.dataset.id = game.id;
 
     if (game.isNew) {
         const badge = document.createElement('div');
@@ -89,11 +97,15 @@ function createGameCard(game) {
 
     const coverWrap = document.createElement('div');
     coverWrap.className = 'game-cover-wrap';
-    
+
+    const displayName = game.translatedName && game.translatedName[currentLang] 
+        ? game.translatedName[currentLang] 
+        : game.name;
+
     const img = document.createElement('img');
     img.className = 'game-cover';
     img.src = `https://images.igdb.com/igdb/image/upload/t_cover_big/${game.igdbId}.webp`;
-    img.alt = game.name;
+    img.alt = displayName;
     img.loading = 'lazy';
     coverWrap.appendChild(img);
 
@@ -129,7 +141,7 @@ function createGameCard(game) {
     
     const title = document.createElement('h3');
     title.className = 'game-title';
-    title.textContent = game.name;
+    title.textContent = displayName;
     
     info.appendChild(title);
     cardLink.appendChild(info);
@@ -159,6 +171,23 @@ function applyTranslations() {
     update(['footer-wishlist'], t.footer.steamWishlist);
 
     document.getElementById('game-search').placeholder = t.searchPlaceholder;
+
+    document.querySelectorAll('.game-card').forEach(card => {
+        const gameId = parseInt(card.dataset.id, 10);
+        const game = games.find(g => g.id === gameId);
+
+        if (game) {
+            const titleEl = card.querySelector('.game-title');
+            const imgEl = card.querySelector('.game-cover');
+
+            const newDisplayName = game.translatedName && game.translatedName[currentLang]
+                ? game.translatedName[currentLang]
+                : game.name;
+
+            if (titleEl) titleEl.textContent = newDisplayName;
+            if (imgEl) imgEl.alt = newDisplayName;
+        }
+    });
 }
 
 function initGallery() {
@@ -178,7 +207,17 @@ function initGallery() {
         currentGames.sort((a, b) => {
             if (a.isNew !== b.isNew) return a.isNew ? -1 : 1;
 
-            return a.name.localeCompare(b.name);
+            const getName = (game) => {
+                if (game.translatedName && game.translatedName[currentLang]) {
+                    return game.translatedName[currentLang];
+                }
+                return game.name || '';
+            };
+
+            const nameA = getName(a);
+            const nameB = getName(b);
+
+            return nameA.localeCompare(nameB);
         });
         
         if (gridContainer) {
@@ -269,9 +308,24 @@ function refreshSearchCache() {
         const commentEl = card.querySelector('.comment-text');
         const hasMemory = commentEl && commentEl.textContent !== '«—»' && commentEl.textContent.trim() !== '';
 
+        const gameId = parseInt(card.dataset.id, 10);
+        const game = games.find(g => g.id === gameId);
+        
+        let searchString = '';
+        if (game) {
+            if (game.name) {
+                searchString += game.name.toLowerCase() + ' ';
+            }
+
+            if (game.translatedName) {
+                if (game.translatedName.ru) searchString += game.translatedName.ru.toLowerCase() + ' ';
+                if (game.translatedName.en) searchString += game.translatedName.en.toLowerCase() + ' ';
+            }
+        }
+
         return {
             element: card,
-            name: card.querySelector('.game-title').textContent.toLowerCase(),
+            searchNames: searchString.trim(),
             hasMemory: hasMemory
         };
     });
@@ -331,8 +385,8 @@ function initSearch() {
 function performSearch(term) {
     let hasAnyVisible = false;
 
-    searchData.forEach(({ element, name, hasMemory }) => {
-        const isMatch = name.includes(term);
+    searchData.forEach(({ element, searchNames,hasMemory }) => {
+        const isMatch = searchNames.includes(term);
         const matchesMemories = !isMemoriesMode || hasMemory;
 
         const shouldShow = isMatch && matchesMemories;
