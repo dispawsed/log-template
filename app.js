@@ -28,6 +28,25 @@ const themeBtn = document.getElementById('theme-toggle');
 const langBtn = document.getElementById('lang-toggle');
 const memoriesBtn = document.getElementById('memories-toggle');
 
+const cardsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        const cardLink = entry.target;
+        const gameId = parseInt(cardLink.dataset.id, 10);
+        const game = games.find(g => g.id === gameId);
+
+        if (!game) return;
+
+        if (entry.isIntersecting) {
+            fillCardData(cardLink, game);
+        } else {
+            clearCardData(cardLink);
+        }
+    });
+}, {
+    root: null,
+    rootMargin: "300px 0px 300px 0px"
+});
+
 async function initApp() {
     try {
         const [savedTheme, savedLang] = [
@@ -86,7 +105,31 @@ function createGameCard(game) {
     cardLink.target = "_blank";
     cardLink.rel = "noopener noreferrer";
     cardLink.className = 'game-card';
-    cardLink.dataset.id = game.id;
+    cardLink.dataset.id = game.id; 
+    cardLink.dataset.loaded = "false"; 
+
+    const displayName = game.translatedName && game.translatedName[currentLang] 
+        ? game.translatedName[currentLang] 
+        : (game.name || '');
+
+    const info = document.createElement('div');
+    info.className = 'game-info';
+    
+    const title = document.createElement('h3');
+    title.className = 'game-title';
+    title.textContent = displayName;
+    
+    info.appendChild(title);
+    cardLink.appendChild(info);
+
+    // Отправляем на слежку
+    cardsObserver.observe(cardLink);
+
+    return cardLink;
+}
+
+function fillCardData(cardLink, game) {
+    if (cardLink.dataset.loaded === "true") return;
 
     if (game.isNew) {
         const badge = document.createElement('div');
@@ -100,7 +143,7 @@ function createGameCard(game) {
 
     const displayName = game.translatedName && game.translatedName[currentLang] 
         ? game.translatedName[currentLang] 
-        : game.name;
+        : (game.name || '');
 
     const img = document.createElement('img');
     img.className = 'game-cover';
@@ -134,19 +177,23 @@ function createGameCard(game) {
     `;
     
     coverWrap.appendChild(statsOverlay);
-    cardLink.appendChild(coverWrap);
 
-    const info = document.createElement('div');
-    info.className = 'game-info';
-    
-    const title = document.createElement('h3');
-    title.className = 'game-title';
-    title.textContent = displayName;
-    
-    info.appendChild(title);
-    cardLink.appendChild(info);
+    const infoEl = cardLink.querySelector('.game-info');
+    cardLink.insertBefore(coverWrap, infoEl);
 
-    return cardLink;
+    cardLink.dataset.loaded = "true";
+}
+
+function clearCardData(cardLink) {
+    if (cardLink.dataset.loaded !== "true") return;
+    
+    const coverWrap = cardLink.querySelector('.game-cover-wrap');
+    if (coverWrap) coverWrap.remove();
+    
+    const badge = cardLink.querySelector('.new-badge');
+    if (badge) badge.remove();
+
+    cardLink.dataset.loaded = "false";
 }
 
 function applyTranslations() {
@@ -305,22 +352,21 @@ function updateNavVisibility() {
 
 function refreshSearchCache() {
     searchData = Array.from(document.querySelectorAll('.game-card')).map(card => {
-        const commentEl = card.querySelector('.comment-text');
-        const hasMemory = commentEl && commentEl.textContent !== '«—»' && commentEl.textContent.trim() !== '';
-
         const gameId = parseInt(card.dataset.id, 10);
         const game = games.find(g => g.id === gameId);
         
         let searchString = '';
-        if (game) {
-            if (game.name) {
-                searchString += game.name.toLowerCase() + ' ';
-            }
+        let hasMemory = false;
 
+        if (game) {
+            if (game.name) searchString += game.name.toLowerCase() + ' ';
             if (game.translatedName) {
                 if (game.translatedName.ru) searchString += game.translatedName.ru.toLowerCase() + ' ';
                 if (game.translatedName.en) searchString += game.translatedName.en.toLowerCase() + ' ';
             }
+
+            const userComment = game.comment ? (currentLang === RU_LANGUAGE ? game.comment.ru : game.comment.en) : '';
+            hasMemory = userComment && userComment !== '—' && userComment.trim() !== '';
         }
 
         return {
