@@ -1,1 +1,1 @@
-# dispawsed's playlog
+# dispawsed's log template

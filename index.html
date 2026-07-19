@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>dispawsed's playlog</title>
+        <title>dispawsed's log template</title>
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,20 +20,20 @@
         </div>
 
         <header class="header">
-            <h1 id="main-title">dispawsed's playlog</h1>
+            <h1 id="main-title">dispawsed's log template</h1>
             
             <div class="nav-wrapper">
                 <nav class="nav-links">
                     <a href="#section-recommended" id="nav-recommended"></a>
-                    <a href="#section-playing" id="nav-playing"></a>
-                    <a href="#section-want-to-play" id="nav-want-to-play"></a>
+                    <a href="#section-doing-now" id="nav-doing-now"></a>
+                    <a href="#section-want-to-do" id="nav-want-to-do"></a>
                     <a href="#section-not-recommended" id="nav-not-recommended"></a>
                 </nav>
                 
                 <div class="search-wrapper">
-                    <button id="memories-toggle" class="memories-btn" title="Memories Mode">🧠</button>
+                    <button id="memories-toggle" class="memories-btn">🧠</button>
                     <div class="search-container">
-                        <input type="text" id="game-search" placeholder="...">
+                        <input type="text" id="items-search" placeholder="...">
                         <button id="clear-search" class="clear-btn">&times;</button>
                     </div>
                 </div>
@@ -45,32 +45,29 @@
 
             <section class="category-section" id="section-recommended">
                 <h2 class="section-title" id="title-recommended"></h2>
-                <div class="games-grid" id="grid-recommended"></div>
+                <div class="items-grid" id="grid-recommended"></div>
             </section>
 
-            <section class="category-section" id="section-playing">
-                <h2 class="section-title" id="title-playing"></h2>
-                <div class="games-grid" id="grid-playing"></div>
+            <section class="category-section" id="section-doing-now">
+                <h2 class="section-title" id="title-doing-now"></h2>
+                <div class="items-grid" id="grid-doing-now"></div>
             </section>
 
-            <section class="category-section" id="section-want-to-play">
-                <h2 class="section-title" id="title-want-to-play"></h2>
-                <div class="games-grid" id="grid-want-to-play"></div>
+            <section class="category-section" id="section-want-to-do">
+                <h2 class="section-title" id="title-want-to-do"></h2>
+                <div class="items-grid" id="grid-want-to-do"></div>
             </section>
 
             <section class="category-section" id="section-not-recommended">
                 <h2 class="section-title" id="title-not-recommended"></h2>
-                <div class="games-grid" id="grid-not-recommended"></div>
+                <div class="items-grid" id="grid-not-recommended"></div>
             </section>
         </main>
 
         <footer class="footer">
             <div class="footer-content">
-                <p class="footer-copyright">© 2026 dispawsed's playlog</p>
-                <div class="footer-links">
-                    <a href="https://github.com/dispawsed/playlog" id="footer-source" target="_blank" rel="noopener noreferrer"></a>
-                    <a href="https://steamcommunity.com/id/dispawsed" id="footer-profile" target="_blank" rel="noopener noreferrer"></a>
-                    <a href="https://store.steampowered.com/wishlist/id/dispawsed" id="footer-wishlist" target="_blank" rel="noopener noreferrer"></a>
+                <p class="footer-copyright" id="footer-copyright">© 2026 dispawsed's log template</p>
+                <div class="footer-links" id="footer-links">
                 </div>
             </div>
         </footer>
