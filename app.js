@@ -1,15 +1,5 @@
-const RECOMMENDED_CATEGORY = 'recommended';
-const DOING_NOW_CATEGORY = 'doing-now';
-const WANT_TO_DO_CATEGORY = 'want-to-do';
-const NOT_RECOMMENDED_CATEGORY = 'not-recommended';
-let categories = [ 
-    RECOMMENDED_CATEGORY, 
-    DOING_NOW_CATEGORY, 
-    WANT_TO_DO_CATEGORY, 
-    NOT_RECOMMENDED_CATEGORY 
-];
-
 let appsettings = {};
+let translations = {};
 
 let items = [];
 let navCache = [];
@@ -34,11 +24,6 @@ const NEW_THRESHOLD_MS = 14 * 24 * 60 * 60 * 1000;
 const thresholdDate = Date.now() - NEW_THRESHOLD_MS;
 
 const DEFAULT_COMMENT = '—';
-
-const themeBtn = document.getElementById('theme-toggle');
-const langBtn = document.getElementById('lang-toggle');
-const memoriesBtn = document.getElementById('memories-toggle');
-const searchInput = document.getElementById('items-search');
 
 const cardsObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -69,22 +54,24 @@ async function initApp() {
         document.body.classList.add(savedTheme);
         currentLang = savedLang;
 
-        const [appsettingsJson, itemsJson] = await Promise.all([
+        const [appsettingsJson, translationsJson, itemsJson] = await Promise.all([
             fetch('appsettings.json').then(r => r.json()),
+            fetch('translations.json').then(r => r.json()),
             fetch('items.json').then(r => r.json())
         ]);
 
         appsettings = appsettingsJson;
+        translations = translationsJson
 
         items = itemsJson.map((item, index) => ({
             ...item,
             id: index + 1,
-            isNew: new Date(item.addedAt).getTime() >= thresholdDate
+            isNew: new Date(item.updatedAt).getTime() >= thresholdDate
         }));
-        
-        langBtn.textContent = currentLang === RU_LANGUAGE ? EN_LANGUAGE : RU_LANGUAGE;
 
+        setTitleAndFooter();
         renderFooterLinks();
+        initCategories();
         applyTranslations();
         initGallery();
         initControls();
@@ -93,6 +80,56 @@ async function initApp() {
     } catch (err) {
         console.error("Internal server error:", err);
     }
+}
+
+function setTitleAndFooter() {
+    const year = new Date().getFullYear();
+    const titleText = appsettings.title;
+
+    const mainTitle = document.getElementById('main-title');
+    const footer = document.getElementById('footer-copyright');
+
+    document.title = titleText;
+    mainTitle.textContent = titleText;
+    footer.textContent = `© ${year} ${titleText}`;
+}
+
+function initCategories() {
+    const categoriesLinksContainer = document.getElementById('categories-links');
+    const mainContainer = document.getElementById('main-container');
+
+    appsettings.categories.forEach(category => {
+        addCategorySectionLink(categoriesLinksContainer, category);
+        addCategorySection(mainContainer, category);
+    });
+}
+
+function addCategorySectionLink(container, category) {
+    const categorySection = document.createElement('a');
+
+    categorySection.id = `nav-${category}`;
+    categorySection.href = `#section-${category}`;
+
+    container.appendChild(categorySection);
+}
+
+function addCategorySection(container, category) {
+    const section = document.createElement('section');
+    section.className = 'category-section';
+    section.id = `section-${category}`;
+
+    const h2 = document.createElement('h2');
+    h2.className = 'section-title';
+    h2.id = `title-${category}`;
+
+    const div = document.createElement('div');
+    div.className = 'items-grid';
+    div.id = `grid-${category}`;
+
+    section.appendChild(h2);
+    section.appendChild(div);
+
+    container.appendChild(section);
 }
 
 function createItemCard(item) {
@@ -126,7 +163,7 @@ function createItemCard(item) {
 function fillCardData(cardLink, item) {
     if (cardLink.dataset.loaded === "true") return;
 
-    const t = appsettings.translations[currentLang];
+    const t = translations[currentLang];
 
     if (item.isNew) {
         const badge = document.createElement('div');
@@ -150,7 +187,7 @@ function fillCardData(cardLink, item) {
     coverWrap.appendChild(img);
 
     const statsText = t.itemStats;
-    const dateObj = new Date(item.addedAt);
+    const dateObj = new Date(item.updatedAt);
     const formattedDate = dateObj.toLocaleDateString(currentLang === RU_LANGUAGE ? RU_LOCALE : EN_LOCALE, {
         year: 'numeric',
         month: 'short',
@@ -194,7 +231,9 @@ function clearCardData(cardLink) {
 }
 
 function applyTranslations() {
-    const t = appsettings.translations[currentLang];
+    const searchInput = document.getElementById('items-search');
+
+    const t = translations[currentLang];
     
     const update = (ids, value) => {
         ids.forEach(id => {
@@ -203,10 +242,9 @@ function applyTranslations() {
         });
     };
 
-    update(['nav-recommended', 'title-recommended'], t.categories.recommended);
-    update(['nav-doing-now', 'title-doing-now'], t.categories.doingNow);
-    update(['nav-want-to-do', 'title-want-to-do'], t.categories.wantToDo);
-    update(['nav-not-recommended', 'title-not-recommended'], t.categories.notRecommended);
+    appsettings.categories.forEach(category => {
+        update([`nav-${category}`, `title-${category}`], t.categories[category]);
+    });
     
     update(['no-results-message'], t.noResults);
 
@@ -235,7 +273,7 @@ function applyTranslations() {
 }
 
 function initGallery() {
-    categories.forEach(category => {
+    appsettings.categories.forEach(category => {
         const gridContainer = document.getElementById(`grid-${category}`);
         const sectionElement = document.getElementById(`section-${category}`);
         const navLink = document.getElementById(`nav-${category}`);
@@ -281,6 +319,11 @@ function initGallery() {
 }
 
 function initControls() {
+    const themeBtn = document.getElementById('theme-toggle');
+    const langBtn = document.getElementById('lang-toggle');
+    const memoriesBtn = document.getElementById('memories-toggle');
+    const searchInput = document.getElementById('items-search');
+
     const updateThemeIcon = () => {
         const isDark = document.body.classList.contains(DARK_THEME);
         themeBtn.textContent = isDark ? SUN_ICON : MOON_ICON;
@@ -326,7 +369,7 @@ function initControls() {
 }
 
 function initNavCache() {
-    navCache = categories.map(category => ({
+    navCache = appsettings.categories.map(category => ({
         section: document.getElementById(`section-${category}`),
         navLink: document.getElementById(`nav-${category}`)
     })).filter(item => item.section && item.navLink);
@@ -433,7 +476,7 @@ function performSearch(term) {
         if (shouldShow) hasAnyVisible = true;
     });
 
-    categories.forEach(category => {
+    appsettings.categories.forEach(category => {
         const section = document.getElementById(`section-${category}`);
         if (!section) return;
 
@@ -477,8 +520,6 @@ function updateMemoriesQueryParam(isActive) {
 
 function renderFooterLinks() {
     const container = document.getElementById('footer-links');
-
-    container.innerHTML = '';
 
     appsettings.links.forEach(link => {
         const a = document.createElement('a');

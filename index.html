@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>dispawsed's log template</title>
+        <title></title>
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,20 +15,15 @@
     </head>
     <body>
         <div class="controls-wrapper">
-            <button id="lang-toggle" class="control-btn">RU</button>
-            <button id="theme-toggle" class="control-btn">☀️</button>
+            <button id="lang-toggle" class="control-btn"></button>
+            <button id="theme-toggle" class="control-btn"></button>
         </div>
 
         <header class="header">
-            <h1 id="main-title">dispawsed's log template</h1>
+            <h1 id="main-title"></h1>
             
             <div class="nav-wrapper">
-                <nav class="nav-links">
-                    <a href="#section-recommended" id="nav-recommended"></a>
-                    <a href="#section-doing-now" id="nav-doing-now"></a>
-                    <a href="#section-want-to-do" id="nav-want-to-do"></a>
-                    <a href="#section-not-recommended" id="nav-not-recommended"></a>
-                </nav>
+                <nav class="nav-links" id="categories-links"></nav>
                 
                 <div class="search-wrapper">
                     <button id="memories-toggle" class="memories-btn">🧠</button>
@@ -40,35 +35,14 @@
             </div>
         </header>
 
-        <main class="container">
+        <main class="container" id="main-container">
             <div class="no-results-message" id="no-results-message" style="display: none;"></div>
-
-            <section class="category-section" id="section-recommended">
-                <h2 class="section-title" id="title-recommended"></h2>
-                <div class="items-grid" id="grid-recommended"></div>
-            </section>
-
-            <section class="category-section" id="section-doing-now">
-                <h2 class="section-title" id="title-doing-now"></h2>
-                <div class="items-grid" id="grid-doing-now"></div>
-            </section>
-
-            <section class="category-section" id="section-want-to-do">
-                <h2 class="section-title" id="title-want-to-do"></h2>
-                <div class="items-grid" id="grid-want-to-do"></div>
-            </section>
-
-            <section class="category-section" id="section-not-recommended">
-                <h2 class="section-title" id="title-not-recommended"></h2>
-                <div class="items-grid" id="grid-not-recommended"></div>
-            </section>
         </main>
 
         <footer class="footer">
             <div class="footer-content">
-                <p class="footer-copyright" id="footer-copyright">© 2026 dispawsed's log template</p>
-                <div class="footer-links" id="footer-links">
-                </div>
+                <p class="footer-copyright" id="footer-copyright"></p>
+                <div class="footer-links" id="footer-links"></div>
             </div>
         </footer>
 

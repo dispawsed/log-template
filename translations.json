@@ -1,0 +1,38 @@
+{
+    "en": {
+        "links": {
+            "footer-source-code": "Source code"
+        },
+        "categories": {
+            "recommended": "🔥 Recommended",
+            "doing-now": "🕹️ Doing right now",
+            "want-to-do": "⏳ Want to do",
+            "not-recommended": "👎 Not recommended"
+        },
+        "itemStats": {
+            "added": "",
+            "comment": ""
+        },
+        "newLabel": "",
+        "searchPlaceholder": "...",
+        "noResults": ""
+    },
+    "ru": {
+        "links": {
+            "footer-source-code": "Исходный код"
+        },
+        "categories": {
+            "recommended": "🔥 Рекомендую",
+            "doing-now": "🕹️ Делаю в данный момент",
+            "want-to-do": "⏳ Хочу сделать",
+            "not-recommended": "👎 Не рекомендую"
+        },
+        "itemStats": {
+            "added": "",
+            "comment": ""
+        },
+        "newLabel": "",
+        "searchPlaceholder": "...",
+        "noResults": ""
+    }
+}
