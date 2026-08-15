@@ -15,7 +15,18 @@
         },
         "newLabel": "",
         "searchPlaceholder": "...",
-        "noResults": ""
+        "noResults": "",
+        "types": {
+            "first-type": {
+                "tooltip": "First type",
+                "icon": "1️⃣"
+            },
+            "second-type": {
+                "tooltip": "Second type",
+                "icon": "2️⃣"
+            }
+        },
+        "memoriesType": "Memories mode"
     },
     "ru": {
         "links": {
@@ -33,6 +44,17 @@
         },
         "newLabel": "",
         "searchPlaceholder": "...",
-        "noResults": ""
+        "noResults": "",
+        "types": {
+            "first-type": {
+                "tooltip": "Первый тип",
+                "icon": "1️⃣"
+            },
+            "second-type": {
+                "tooltip": "Второй тип",
+                "icon": "2️⃣"
+            }
+        },
+        "memoriesType": "Режим воспоминаний"
     }
 }

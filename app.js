@@ -6,24 +6,29 @@ let navCache = [];
 let searchData = [];
 
 let currentLang = 'en';
-let isMemoriesMode = false;
+let typeMods = {};
 
-const DARK_THEME = 'dark-theme';
-const LIGHT_THEME = 'light-theme';
-const THEME_KEY = 'theme';
+const MEMORY_ICON = '🧠';
 const MOON_ICON = '🌙';
 const SUN_ICON = '☀️';
 
+const THEME_KEY = 'theme';
+const DARK_THEME = 'dark-theme';
+const LIGHT_THEME = 'light-theme';
+
+const LANGUAGE_KEY = 'language';
 const EN_LANGUAGE = 'en';
 const RU_LANGUAGE = 'ru';
+
 const RU_LOCALE = 'ru-RU';
 const EN_LOCALE = 'en-US';
-const LANGUAGE_KEY = 'language';
 
 const NEW_THRESHOLD_MS = 14 * 24 * 60 * 60 * 1000;
 const thresholdDate = Date.now() - NEW_THRESHOLD_MS;
 
 const DEFAULT_COMMENT = '—';
+const MEMORY_TYPE = 'memories';
+const TYPE_MODS_QUERY_PARAMETER = 'type';
 
 const cardsObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -61,6 +66,8 @@ async function initApp() {
         ]);
 
         appsettings = appsettingsJson;
+        appsettings.types.push(MEMORY_TYPE);
+
         translations = translationsJson
 
         items = itemsJson.map((item, index) => ({
@@ -72,6 +79,7 @@ async function initApp() {
         setTitleAndFooter();
         renderFooterLinks();
         initCategories();
+        initSearchTypes();
         applyTranslations();
         initGallery();
         initControls();
@@ -132,14 +140,29 @@ function addCategorySection(container, category) {
     container.appendChild(section);
 }
 
+function initSearchTypes() {
+    const searchWrapperContainer = document.getElementById('search-wrapper-container');
+
+    appsettings.types.reverse().forEach(type => {
+        typeMods[type] = false;
+
+        const button = document.createElement('button');
+
+        button.classList.add("type-btn", "custom-tooltip");
+        button.id = `${type}-toggle`;
+
+        searchWrapperContainer.prepend(button);
+    });
+}
+
 function createItemCard(item) {
     const cardLink = document.createElement('a');
     cardLink.href = item.sourceUrl || `${appsettings.itemSourceUrl}/${item.sourceId}`;
     cardLink.target = "_blank";
     cardLink.rel = "noopener noreferrer";
     cardLink.className = 'item-card';
-    cardLink.dataset.id = item.id; 
-    cardLink.dataset.loaded = "false"; 
+    cardLink.dataset.id = item.id;
+    cardLink.dataset.loaded = "false";
 
     const displayName = item.translatedName && item.translatedName[currentLang] 
         ? item.translatedName[currentLang] 
@@ -252,6 +275,13 @@ function applyTranslations() {
         update([link.id], t.links[link.id]);
     });
 
+    appsettings.types.forEach(type => {
+        const typeBtn = document.getElementById(`${type}-toggle`);
+
+        typeBtn.dataset.tooltip = type === MEMORY_TYPE ? t.memoriesType : t.types[type].tooltip;
+        typeBtn.textContent = type === MEMORY_TYPE ? MEMORY_ICON : t.types[type].icon;
+    });
+
     searchInput.placeholder = t.searchPlaceholder;
 
     document.querySelectorAll('.item-card').forEach(card => {
@@ -321,7 +351,6 @@ function initGallery() {
 function initControls() {
     const themeBtn = document.getElementById('theme-toggle');
     const langBtn = document.getElementById('lang-toggle');
-    const memoriesBtn = document.getElementById('memories-toggle');
     const searchInput = document.getElementById('items-search');
 
     const updateThemeIcon = () => {
@@ -358,13 +387,35 @@ function initControls() {
         performSearch(term); 
     });
 
-    memoriesBtn.addEventListener('click', () => {
-        isMemoriesMode = !isMemoriesMode;
-        memoriesBtn.classList.toggle('active', isMemoriesMode);
+    appsettings.types.forEach(type => {
+        const typeBtn = document.getElementById(`${type}-toggle`);
 
-        updateMemoriesQueryParam(isMemoriesMode);
+        typeBtn.addEventListener('click', () => {
+            const isActive = !typeMods[type];
 
-        performSearch(searchInput ? searchInput.value.toLowerCase() : '');
+            if (isActive && type !== MEMORY_TYPE) {
+                appsettings.types.forEach(innerType => {
+                    if (innerType !== MEMORY_TYPE && innerType !== type)
+                    {
+                        const innerTypeBtn = document.getElementById(`${innerType}-toggle`);
+
+                        const innerIsActive = false;
+
+                        typeMods[innerType] = innerIsActive;
+                        innerTypeBtn.classList.toggle('active', innerIsActive);
+
+                        updateTypeModsQueryParam(innerType);
+                    }
+                });
+            }
+
+            typeMods[type] = isActive;
+            typeBtn.classList.toggle('active', isActive);
+
+            updateTypeModsQueryParam(type);
+
+            performSearch(searchInput ? searchInput.value.toLowerCase() : '');
+        });
     });
 }
 
@@ -393,6 +444,7 @@ function refreshSearchCache() {
         
         let searchString = '';
         let hasMemory = false;
+        let type = '';
 
         if (item) {
             if (item.name) searchString += item.name.toLowerCase() + ' ';
@@ -403,12 +455,14 @@ function refreshSearchCache() {
 
             const userComment = item.comment ? (currentLang === RU_LANGUAGE ? item.comment.ru : item.comment.en) : '';
             hasMemory = userComment && userComment !== DEFAULT_COMMENT && userComment.trim() !== '';
+            type = item.type;
         }
 
         return {
             element: card,
             searchNames: searchString.trim(),
-            hasMemory: hasMemory
+            hasMemory: hasMemory,
+            type: type
         };
     });
 }
@@ -416,17 +470,24 @@ function refreshSearchCache() {
 function initSearch() {
     const searchInput = document.getElementById('items-search');
     const clearBtn = document.getElementById('clear-search');
-    const memoriesBtn = document.getElementById('memories-toggle');
 
     const urlParams = new URLSearchParams(window.location.search);
     const initialTerm = urlParams.get('search');
-    const initialMemories = urlParams.get('memories') === 'true';
+    const memoriesType = urlParams.get(MEMORY_TYPE) === 'true';
+    const type = urlParams.get(TYPE_MODS_QUERY_PARAMETER);
 
-    if (initialMemories) {
-        isMemoriesMode = true;
-        if (memoriesBtn) {
-            memoriesBtn.classList.add('active');
-        }
+    if (memoriesType) {
+        typeMods[MEMORY_TYPE] = true;
+
+        const typeBtn = document.getElementById(`${MEMORY_TYPE}-toggle`);
+        typeBtn.classList.add('active');
+    }
+
+    if (type) {
+        typeMods[type] = true;
+
+        const typeBtn = document.getElementById(`${type}-toggle`);
+        typeBtn.classList.add('active');
     }
     
     const toggleClearButton = (term) => {
@@ -438,7 +499,7 @@ function initSearch() {
         toggleClearButton(initialTerm);
     }
 
-    if (initialTerm || initialMemories) {
+    if (initialTerm || memoriesType || type) {
         setTimeout(() => performSearch(initialTerm || ''), 100); 
     }
 
@@ -466,12 +527,22 @@ function initSearch() {
 function performSearch(term) {
     let hasAnyVisible = false;
 
-    searchData.forEach(({ element, searchNames,hasMemory }) => {
-        const isMatch = searchNames.includes(term);
-        const matchesMemories = !isMemoriesMode || hasMemory;
+    searchData.forEach(data => {
+        const isMatch = data.searchNames.includes(term);
+        const matchesMemories = !typeMods[MEMORY_TYPE] || data.hasMemory;
 
-        const shouldShow = isMatch && matchesMemories;
-        element.style.display = shouldShow ? 'flex' : 'none';
+        let matchesTypes = true;
+        appsettings.types.forEach(type => {
+            if (type === MEMORY_TYPE) {
+                matchesTypes = matchesTypes && (!typeMods[type] || data.hasMemory);
+            }
+            else {
+                matchesTypes = matchesTypes && (!typeMods[type] || data.type === type);
+            }
+        });
+
+        const shouldShow = isMatch && matchesTypes;
+        data.element.style.display = shouldShow ? 'flex' : 'none';
 
         if (shouldShow) hasAnyVisible = true;
     });
@@ -506,13 +577,22 @@ function updateSearchQueryParam(term) {
     window.history.replaceState(null, '', url);
 }
 
-function updateMemoriesQueryParam(isActive) {
+function updateTypeModsQueryParam(type) {
     const url = new URL(window.location);
 
-    if (isActive) {
-        url.searchParams.set('memories', 'true');
-    } else {
-        url.searchParams.delete('memories');
+    if (type === MEMORY_TYPE) {
+        if (typeMods[type]) {
+            url.searchParams.set(type, 'true');
+        } else {
+            url.searchParams.delete(type);
+        }
+    }
+    else {
+        if (typeMods[type]) {
+            url.searchParams.set(TYPE_MODS_QUERY_PARAMETER, type);
+        } else {
+            url.searchParams.delete(TYPE_MODS_QUERY_PARAMETER);
+        }
     }
 
     window.history.replaceState(null, '', url);

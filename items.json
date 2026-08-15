@@ -12,7 +12,8 @@
         "comment": {
             "en": "Item en comment",
             "ru": "Item ru comment"
-        }
+        },
+        "type": "first-type"
     },
     {
         "name": "Item name",
@@ -27,7 +28,8 @@
         "comment": {
             "en": "Item en comment",
             "ru": "Item ru comment"
-        }
+        },
+        "type": "second-type"
     },
     {
         "name": "Item name",
@@ -42,7 +44,8 @@
         "comment": {
             "en": "Item en comment",
             "ru": "Item ru comment"
-        }
+        },
+        "type": "first-type"
     },
     {
         "name": "Item name",
@@ -57,6 +60,7 @@
         "comment": {
             "en": "Item en comment",
             "ru": "Item ru comment"
-        }
+        },
+        "type": "second-type"
     }
 ]
