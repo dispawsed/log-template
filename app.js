@@ -69,23 +69,14 @@ async function initApp() {
         document.body.classList.add(savedTheme);
         currentLang = savedLang;
 
-        const [appsettingsJson, ...loadedCategoriesJsons] = await Promise.all([
+        const [appsettingsJson, itemsJson] = await Promise.all([
             fetch('appsettings.json').then(r => r.json()),
-            ...categories.map(c => fetch(`data/items.${c}.json`).then(r => r.json()))
+            fetch('items.json').then(r => r.json())
         ]);
 
         appsettings = appsettingsJson;
 
-        const rawItems = categories.flatMap((category, index) => {
-            const jsonForCategory = loadedCategoriesJsons[index];
-            
-            return jsonForCategory.map(item => ({
-                ...item,
-                category: category
-            }));
-        });
-
-        items = rawItems.map((item, index) => ({
+        items = itemsJson.map((item, index) => ({
             ...item,
             id: index + 1,
             isNew: new Date(item.addedAt).getTime() >= thresholdDate
