@@ -204,7 +204,7 @@ function fillCardData(cardLink, item) {
 
     const img = document.createElement('img');
     img.className = 'item-cover';
-    img.src = `${appsettings.itemImageUrl}/${item.imageId}.webp`;
+    img.src = `${appsettings.itemImageUrl}/${item.imageId}`;
     img.alt = displayName;
     img.loading = 'lazy';
     coverWrap.appendChild(img);
